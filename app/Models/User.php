@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -19,9 +21,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'subscription_start',
         'email',
         'password',
     ];
+
+    public function vehiculos()
+    {
+        return $this->hasMany(Vehiculo::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +51,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            // Buscar el rol "Cliente"
+            $clienteRole = Role::where('name', 'Cliente')->first();
+
+            // Asignar el rol "Cliente" al usuario
+            if ($clienteRole && $user) {
+                $user->assignRole($clienteRole);
+            }
+        });
+    }
 }

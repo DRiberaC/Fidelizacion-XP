@@ -14,21 +14,21 @@
         <div class="flex flex-col justify-between h-full">
             <div class="flex-grow">
                 <div class="px-4 py-6 text-center border-b">
-                    <h1 class="text-xl font-bold leading-none"><span class="text-blue-900">Fidelización</span> ROES
+                    <h1 class="text-xl font-bold leading-none"><span class="text-indigo-600">Fidelización</span> ROES
                     </h1>
                 </div>
                 <div class="p-4">
                     <ul class="space-y-1">
                         <li>
-                            <a href="javascript:void(0)"
-                                class="block rounded-lg px-4 py-3 text-sm font-medium text-gray-900 bg-gray-100">
-                                Plan
+                            <a href="{{ route('cliente.index') }}"
+                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('cliente*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                Clientes
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)"
-                                class="block rounded-lg px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                Task list
+                            <a href="{{ route('carga.index') }}"
+                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('carga*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                Cargas
                             </a>
                         </li>
 
@@ -36,7 +36,7 @@
                             <details class="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary
                                     class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                    <span class="text-sm font-medium"> Teams </span>
+                                    <span class="text-sm font-medium"> Menú </span>
 
                                     <span class="shrink-0 transition duration-300 group-open:-rotate-180">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -50,18 +50,17 @@
 
                                 <ul class="mt-2 space-y-1 px-4">
                                     <li>
-                                        <a href=""
+                                        <a href="javascript:void(0)"
                                             class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                            Banned Users
+                                            Menú 1
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href=""
+                                        <a href="javascript:void(0)"
                                             class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                            Calendar
+                                            Menú 2
                                         </a>
-                                    </li>
                                 </ul>
                             </details>
                         </li>
