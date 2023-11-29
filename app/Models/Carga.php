@@ -9,6 +9,7 @@ class Carga extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id_referencia',
         'observacion',
         'total',
         'nro_factura',
@@ -19,4 +20,9 @@ class Carga extends Model
         'precio',
         'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

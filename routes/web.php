@@ -43,4 +43,6 @@ Route::controller(VehiculoController::class)->prefix('/cliente/vehiculo')->name(
 
 Route::controller(CargaController::class)->prefix('/carga')->name('carga')->group(function () {
     Route::get('/', "index")->name('.index');
+    Route::get('/obtener-gargar-fecha', "getcarga")->name('.getcarga');
+    Route::post('/obtener-gargar-fecha-url', "getcargafecha")->name('.getcargafecha');
 });

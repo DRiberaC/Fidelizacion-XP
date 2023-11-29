@@ -11,14 +11,28 @@
                                 Lista de Cargas
                             </h1>
                         </div>
+
+                        <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                            <a href="{{ route('carga.getcarga') }}">
+                                <button
+                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                    type="button">
+                                    Obtener Cargas de Fecha
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
+
                 <div class="relative overflow-x-auto rounded-2xl ">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                         <thead class="text-xs text-black uppercase bg-gray-100 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Observacion
+                                    Cliente
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Placa
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Fecha Venta
@@ -40,6 +54,9 @@
                         <tbody>
                             @foreach ($cargas as $cargas)
                                 <tr class="bg-white border-b">
+                                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
+                                        {{ $cargas->user()->name }}
+                                    </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
                                         {{ $cargas->observacion }}
                                     </th>

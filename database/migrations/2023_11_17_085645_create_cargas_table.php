@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('cargas', function (Blueprint $table) {
             $table->id();
+            $table->string('id_referencia');
             $table->string('observacion');
             $table->decimal('total', 10, 2);
             $table->integer('nro_factura');
