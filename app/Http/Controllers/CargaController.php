@@ -24,11 +24,12 @@ class CargaController extends Controller
     {
         $client = new Client();
         $url = 'http://192.168.10.12:30004/reporteroes/2023-11-23?format=json';
+        $token = env('TOKEN_XPSOLUTIONS');
 
         try {
             $response = $client->request('GET', $url, [
                 'headers' => [
-                    'auth-xpsolutions' => 'token'
+                    'auth-xpsolutions' => $token
                 ]
             ]);
 
