@@ -41,7 +41,23 @@ class CargaController extends Controller
                 // Por ejemplo, decodificar el JSON si es necesario
                 $data = json_decode($content, true);
                 // ... haz algo con los datos obtenidos
-                dd($data);
+                // dd($data);
+
+                foreach ($data as $item) {
+                    $carga = new Carga();
+                    $carga->id_referencia = $item['id'];
+                    $carga->observacion = $item['observacion'];
+                    $carga->total = $item['total'];
+                    $carga->nro_factura = $item['nro_factura'];
+                    $carga->fecha_venta = $item['fecha_venta'];
+                    $carga->razon_social = $item['razon_social'];
+                    $carga->nit = $item['nit'];
+                    $carga->cantidad = $item['cantidad'];
+                    $carga->precio = $item['precio'];
+                    $carga->save();
+                }
+
+                return redirect()->route('carga.index');
             } else {
                 // Manejar otros códigos de estado si es necesario
             }
