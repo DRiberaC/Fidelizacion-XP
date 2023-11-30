@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             app()->call('App\Http\Controllers\CargaController@getcargafechaAutomatico');
-        })->everyMinute();
+        })->everyFifteenMinutes();
     }
 
     /**
