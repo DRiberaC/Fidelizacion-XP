@@ -55,7 +55,9 @@
                             @foreach ($cargas as $cargas)
                                 <tr class="bg-white border-b">
                                     <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        {{ $cargas->user->name }}
+                                        @if ($cargas->user)
+                                            {{ $cargas->user->name }}
+                                        @endif
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
                                         {{ $cargas->observacion }}
