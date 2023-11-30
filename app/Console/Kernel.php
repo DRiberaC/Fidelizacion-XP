@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Http\Controllers\CargaController;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
