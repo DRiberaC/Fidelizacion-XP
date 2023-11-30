@@ -54,6 +54,7 @@ class CargaController extends Controller
                     $carga->nit = $item['nit'];
                     $carga->cantidad = $item['cantidad'];
                     $carga->precio = $item['precio'];
+                    $carga->user_id = null;
                     $carga->save();
                 }
 
