@@ -14,8 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            $controller = new \App\Http\Controllers\CargaController();
-            $controller->getcargafechaAutomatico();
+            app()->call('App\Http\Controllers\CargaController@getcargafechaAutomatico');
             // })->everyFifteenMinutes();
         })->everyMinute();
     }
