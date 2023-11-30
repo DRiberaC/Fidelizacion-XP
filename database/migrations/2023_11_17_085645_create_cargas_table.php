@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('nro_factura');
             $table->date('fecha_venta');
             $table->string('razon_social');
-            $table->integer('nit');
+            $table->string('nit');
             $table->decimal('cantidad', 10, 2);
             $table->decimal('precio', 10, 2);
 
