@@ -22,11 +22,11 @@ class CargaController extends Controller
 
     function getcargafecha(Request $request)
     {
+        $fecha = $request->input('fecha');
         $client = new Client();
-        $url = 'http://192.168.10.12:30004/reporteroes/2023-11-23?format=json';
+        $url = "http://192.168.10.12:30004/reporteroes/$fecha?format=json";
         $token = env('TOKEN_XPSOLUTIONS');
 
-        // try {
         $response = $client->request('GET', $url, [
             'headers' => [
                 'auth-xpsolutions' => $token
@@ -37,12 +37,7 @@ class CargaController extends Controller
 
         if ($statusCode === 200) {
             $content = $response->getBody()->getContents();
-            // Aquí puedes manejar la respuesta de la URL, que está en $content
-            // Por ejemplo, decodificar el JSON si es necesario
             $data = json_decode($content, true);
-            // ... haz algo con los datos obtenidos
-            // dd($data);
-
             foreach ($data as $item) {
                 $carga = new Carga();
                 $carga->id_referencia = $item['id'];
@@ -60,10 +55,8 @@ class CargaController extends Controller
 
             return redirect()->route('carga.index');
         } else {
+            return redirect()->route('carga.index');
             // Manejar otros códigos de estado si es necesario
         }
-        // } catch (\Exception $e) {
-        //     dd($e->getMessage()); // Esto es solo para depurar, puedes manejar el error como desees
-        // }
     }
 }
