@@ -14,8 +14,21 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            app()->call('App\Http\Controllers\CargaController@getcargafechaAutomatico');
+            // app()->call('App\Http\Controllers\CargaController@getcargafechaAutomatico');
             // })->everyFifteenMinutes();
+
+            $name = "ddd";
+            $last_name = "ddd";
+            $email = Str::slug($name . '_' . $last_name) . '@roes.com';
+            $password = bcrypt('password');
+
+            $user = User::create([
+                'name' => $name,
+                'last_name' => $last_name,
+                'subscription_start' => now()->format('Y-m-d'),
+                'email' => $email,
+                'password' => $password,
+            ]);
         })->everyMinute();
     }
 
