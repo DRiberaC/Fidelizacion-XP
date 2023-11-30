@@ -35,7 +35,7 @@ class Carga extends Model
             $vehiculo = Vehiculo::where('placa', $model->observacion)->get();
 
             if ($vehiculo)
-                $model->user_id = $vehiculo->user_id;
+                $model->user_id = $vehiculo['user_id'];
         });
     }
 }
