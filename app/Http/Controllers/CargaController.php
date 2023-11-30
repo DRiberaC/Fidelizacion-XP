@@ -20,9 +20,20 @@ class CargaController extends Controller
         return view('carga.getcarga');
     }
 
-    function getcargafecha(Request $request)
+    public function getcargafechaAutomatico()
+    {
+        $fecha = now()->format('Y-m-d'); // Obtiene la fecha actual
+        $this->procesarFecha($fecha);
+    }
+
+    public function getcargafecha(Request $request)
     {
         $fecha = $request->input('fecha');
+        $this->procesarFecha($fecha);
+    }
+
+    private function procesarFecha($fecha)
+    {
         $client = new Client();
         $url = "http://192.168.10.12:30004/reporteroes/$fecha?format=json";
         $token = env('TOKEN_XPSOLUTIONS');

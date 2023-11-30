@@ -26,16 +26,22 @@ class Carga extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+
+
     protected static function boot()
     {
         parent::boot();
 
+        static::creating(function ($model) {
+            $existingCarga = Carga::where('id_referencia', $model->id_referencia)->exists();
+            if ($existingCarga) {
+                return false; // Si ya existe, abortar la creación del modelo
+            }
+        });
+
         static::created(function ($model) {
-
             $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
-
             if ($vehiculo) {
-                // dd($vehiculo, $model);
                 $model->user_id = $vehiculo->user_id;
                 $model->save();
             }
