@@ -32,7 +32,7 @@ class Carga extends Model
 
         static::created(function ($model) {
 
-            $vehiculo = Vehiculo::where('placa', $model->observacion)->get();
+            $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
 
             if ($vehiculo) {
                 // dd($vehiculo, $model);
