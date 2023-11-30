@@ -25,4 +25,17 @@ class Carga extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($model) {
+
+            $vehiculo = Vehiculo::where('placa', $model->observacion)->get();
+
+            if ($vehiculo)
+                $model->user_id = $vehiculo->user_id;
+        });
+    }
 }

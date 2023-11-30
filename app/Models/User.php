@@ -56,13 +56,13 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::created(function ($user) {
+        static::created(function ($model) {
             // Buscar el rol "Cliente"
             $clienteRole = Role::where('name', 'Cliente')->first();
 
             // Asignar el rol "Cliente" al usuario
-            if ($clienteRole && $user) {
-                $user->assignRole($clienteRole);
+            if ($clienteRole && $model) {
+                $model->assignRole($clienteRole);
             }
         });
     }
