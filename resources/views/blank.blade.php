@@ -34,6 +34,13 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('recompensa.index') }}"
+                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                Recompensas
+                            </a>
+                        </li>
+
+                        <li>
                             <details class="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary
                                     class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">

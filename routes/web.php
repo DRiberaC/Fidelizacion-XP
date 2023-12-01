@@ -3,6 +3,7 @@
 use App\Http\Controllers\CargaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\RecompensaController;
 use App\Http\Controllers\VehiculoController;
 
 /*
@@ -45,4 +46,14 @@ Route::controller(CargaController::class)->prefix('/carga')->name('carga')->grou
     Route::get('/', "index")->name('.index');
     Route::get('/obtener-gargar-fecha', "getcarga")->name('.getcarga');
     Route::post('/obtener-gargar-fecha-url', "getcargafecha")->name('.getcargafecha');
+});
+
+Route::controller(RecompensaController::class)->prefix('/recompensa')->name('recompensa')->group(function () {
+    Route::get('/', "index")->name('.index');
+    Route::get('/crear-recompensa', "create")->name('.create');
+    Route::post('/store-recompensa', "store")->name('.store');
+
+    Route::get('/historial/{recompensa}', "historial")->name('.historial');
+    Route::get('/historial/{recompensa}/crear-historial', "historialcreate")->name('.historialcreate');
+    Route::post('/historial/{recompensa}/store-historial', "historialstore")->name('.historialstore');
 });
