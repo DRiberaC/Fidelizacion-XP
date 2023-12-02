@@ -28,17 +28,20 @@ class ClienteController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'ci_nit' => 'required',
             'subscription_start' => 'required|date',
         ]);
 
         $name = $request->input('name');
         $last_name = $request->input('last_name');
-        $email = Str::slug($name . '_' . $last_name) . '@roes.com';
+        $ci_nit = $request->input('ci_nit');
+        $email = "$ci_nit@roes.com";
         $password = bcrypt('password');
 
         $user = User::create([
             'name' => $name,
             'last_name' => $last_name,
+            'ci_nit' => $ci_nit,
             'subscription_start' => $request->input('subscription_start'),
             'email' => $email,
             'password' => $password,

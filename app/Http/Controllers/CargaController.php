@@ -24,12 +24,25 @@ class CargaController extends Controller
     {
         $fecha = now()->format('Y-m-d'); // Obtiene la fecha actual
         $this->procesarFecha($fecha);
+        return redirect()->route('carga.index');
     }
 
     public function getcargafecha(Request $request)
     {
-        $fecha = $request->input('fecha');
-        $this->procesarFecha($fecha);
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+
+        // Convertir las fechas a objetos DateTime
+        $fechaInicio = new DateTime($fecha_inicio);
+        $fechaFin = new DateTime($fecha_fin);
+
+        // Iterar sobre el rango de fechas
+        for ($fecha = $fechaInicio; $fecha <= $fechaFin; $fecha->modify('+1 day')) {
+            $ff = $fecha->format('Y-m-d');
+            echo "Obteniendo datos de fecha $ff <br>";
+            $this->procesarFecha($ff);
+        }
+        return redirect()->route('carga.index');
     }
 
     private function procesarFecha($fecha)
@@ -64,9 +77,9 @@ class CargaController extends Controller
                 $carga->save();
             }
 
-            return redirect()->route('carga.index');
+            // return redirect()->route('carga.index');
         } else {
-            return redirect()->route('carga.index');
+            // return redirect()->route('carga.index');
             // Manejar otros códigos de estado si es necesario
         }
     }

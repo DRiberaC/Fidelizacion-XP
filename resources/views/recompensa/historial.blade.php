@@ -39,7 +39,7 @@
                                 Cantidad
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                &nbsp;
+                                Fecha
                             </th>
                         </tr>
                     </thead>
@@ -57,7 +57,7 @@
                                     {{ $historial->cantidad }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    &nbsp;
+                                    {{ $historial->created_at }} : {{ $historial->created_at->diffForHumans() }}
                                 </td>
                             </tr>
                         @endforeach

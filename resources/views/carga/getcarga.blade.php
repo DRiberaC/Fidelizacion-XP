@@ -38,12 +38,21 @@
                         <div class="border-b border-gray-900/10 pb-12">
                             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div class="sm:col-span-2 sm:col-start-1">
-                                    <label for="subscription_start"
-                                        class="block text-sm font-medium leading-6 text-gray-900">
+                                    <label for="fecha_inicio" class="block text-sm font-medium leading-6 text-gray-900">
                                         Fecha de Inicio
                                     </label>
                                     <div class="mt-2">
-                                        <input type="date" name="fecha" value="{{ date('Y-m-d') }}"
+                                        <input type="date" name="fecha_inicio" value="{{ date('Y-m-d') }}"
+                                            class="block w-full rounded-md border-0 p-2  text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-2 sm:col-start-1">
+                                    <label for="fecha_fin" class="block text-sm font-medium leading-6 text-gray-900">
+                                        Fecha de Fin
+                                    </label>
+                                    <div class="mt-2">
+                                        <input type="date" name="fecha_fin" value="{{ date('Y-m-d') }}"
                                             class="block w-full rounded-md border-0 p-2  text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>

@@ -61,6 +61,16 @@
                                 </div>
 
                                 <div class="sm:col-span-2 sm:col-start-1">
+                                    <label for="ci_nit" class="block text-sm font-medium leading-6 text-gray-900">
+                                        CI/NIT
+                                    </label>
+                                    <div class="mt-2">
+                                        <input type="text" name="ci_nit"
+                                            class="block w-full rounded-md border-0 p-2  text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-2 sm:col-start-1">
                                     <label for="subscription_start"
                                         class="block text-sm font-medium leading-6 text-gray-900">
                                         Fecha de Inicio
