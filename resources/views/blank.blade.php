@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @yield('styles')
     @vite('resources/css/app.css')
     <title>Document</title>
 </head>
@@ -27,7 +28,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('carga.index') }}"
+                            <a href="{{ route('carga.index', [date('Y-m')]) }}"
                                 class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('carga*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
                                 Cargas
                             </a>
@@ -102,3 +103,4 @@
 </body>
 
 </html>
+@yield('scripts')

@@ -1,5 +1,11 @@
 @extends('blank')
 
+@section('styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"> --}}
+@endsection
+
 @section('content')
     <div class="px-2 py-2">
         <div class="max-w-7xl mx-auto">
@@ -8,7 +14,7 @@
                     <div class="sm:flex sm:items-center sm:justify-between">
                         <div class="text-center sm:text-left">
                             <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Lista de Cargas
+                                Lista de Cargas {{ $fecha_act }}
                             </h1>
                         </div>
 
@@ -24,8 +30,43 @@
                     </div>
                 </div>
 
+                <hr class="py-2">
+
+                <div class="grid grid-cols-3 pb-3">
+                    <div class="flex justify-center">
+                        <a href="{{ route('carga.index', [$fecha_ant]) }}">
+                            <button
+                                class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                type="button">
+                                Ver Cargas de Fecha {{ $fecha_ant }}
+                            </button>
+                        </a>
+                    </div>
+                    <div class="flex justify-center">
+                        <a href="{{ route('carga.obtenerfecha', [$fecha_act]) }}">
+                            <button
+                                class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                type="button">
+                                Obtener Cargas de Fecha {{ $fecha_act }}
+                            </button>
+                        </a>
+                    </div>
+                    <div class="flex justify-center">
+                        <a href="{{ route('carga.index', [$fecha_sig]) }}">
+                            <button
+                                class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                type="button">
+                                Ver Cargas de Fecha {{ $fecha_sig }}
+                            </button>
+                        </a>
+
+                    </div>
+                </div>
+
+
                 <div class="relative overflow-x-auto rounded-2xl ">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <table id="lista"
+                        class="table compact stripe w-full text-sm text-left rtl:text-right text-gray-500">
                         <thead class="text-xs text-black uppercase bg-gray-100 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
@@ -87,4 +128,23 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        // let dt = new DataTable('#lista');
+
+        $('#lista').dataTable({
+            aLengthMenu: [
+                [25, 50, 100, 200, -1],
+                [25, 50, 100, 200, "All"]
+            ],
+            iDisplayLength: 25
+        });
+    </script>
 @endsection

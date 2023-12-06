@@ -43,9 +43,11 @@ Route::controller(VehiculoController::class)->prefix('/cliente/vehiculo')->name(
 
 
 Route::controller(CargaController::class)->prefix('/carga')->name('carga')->group(function () {
-    Route::get('/', "index")->name('.index');
+    // Route::get('/', "index")->name('.index');
+    Route::get('/fecha/{fecha}', "index")->name('.index');
+    Route::get('/obtener-fecha/{fecha}', "getcargafecha")->name('.obtenerfecha');
     Route::get('/obtener-gargar-fecha', "getcarga")->name('.getcarga');
-    Route::post('/obtener-gargar-fecha-url', "getcargafecha")->name('.getcargafecha');
+    Route::post('/obtener-gargar-fecha-url', "getcargafecharango")->name('.getcargafecha');
 });
 
 Route::controller(RecompensaController::class)->prefix('/recompensa')->name('recompensa')->group(function () {
