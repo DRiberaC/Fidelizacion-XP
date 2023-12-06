@@ -35,7 +35,8 @@ class CargaController extends Controller
     {
         $fecha = now()->format('Y-m-d'); // Obtiene la fecha actual
         $this->procesarFecha($fecha);
-        return redirect()->route('carga.index');
+        $fn = now()->format('Y-m');
+        return redirect()->route('carga.index', [$fn]);
     }
 
     public function getcargafecha($fecha)
@@ -50,7 +51,8 @@ class CargaController extends Controller
             echo "Obteniendo datos de fecha $ff <br>";
             $this->procesarFecha($ff);
         }
-        return redirect()->route('carga.index');
+        $fn = now()->format('Y-m');
+        return redirect()->route('carga.index', [$fn]);
     }
 
     public function getcargafecharango(Request $request)
@@ -68,7 +70,8 @@ class CargaController extends Controller
             echo "Obteniendo datos de fecha $ff <br>";
             $this->procesarFecha($ff);
         }
-        return redirect()->route('carga.index');
+        $fn = now()->format('Y-m');
+        return redirect()->route('carga.index', [$fn]);
     }
 
     private function procesarFecha($fecha)
