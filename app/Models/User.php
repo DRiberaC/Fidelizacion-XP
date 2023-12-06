@@ -33,6 +33,39 @@ class User extends Authenticatable
         return $this->hasMany(Vehiculo::class);
     }
 
+    public function cargas()
+    {
+        return $this->hasMany(Carga::class);
+    }
+
+
+
+    public function getGNV()
+    {
+        $gnv = $this->sumCantidadWithPrice("1.66");
+        return $gnv;
+    }
+
+    public function getGAS()
+    {
+        $gas = $this->sumCantidadWithPrice("3.74");
+        return $gas;
+    }
+
+    public function getDIS()
+    {
+        $dis = $this->sumCantidadWithPrice("3.72");
+        return $dis;
+    }
+
+    public function sumCantidadWithPrice($price)
+    {
+        $total = $this->cargas()
+            ->where('precio', $price)
+            ->sum('cantidad');
+        return $total;
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

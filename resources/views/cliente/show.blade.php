@@ -39,9 +39,18 @@
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                     {{ $cliente->email }}</dd>
                             </div>
+
+                            @php
+                                $gnv = $cliente->getGNV();
+                                $gas = $cliente->getGAS();
+                                $dis = $cliente->getDIS();
+                                $ggd = $gnv + $gas + $dis;
+                            @endphp
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Obtenidos</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">0</dd>
+                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{ $ggd }}
+                                </dd>
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Reclamados</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">0</dd>
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Restantes</dt>
