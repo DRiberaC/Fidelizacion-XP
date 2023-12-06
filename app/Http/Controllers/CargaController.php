@@ -107,6 +107,7 @@ class CargaController extends Controller
                     $carga->cantidad = $item['cantidad'];
                     $carga->precio = $item['precio'];
                     $carga->user_id = $vehiculo->user->id;
+                    $carga->save();
                 }
             }
 
