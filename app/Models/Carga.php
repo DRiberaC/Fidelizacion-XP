@@ -28,23 +28,23 @@ class Carga extends Model
 
 
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
+    protected static function boot()
+    {
+        parent::boot();
 
-    //     static::creating(function ($model) {
-    //         $existingCarga = Carga::where('id_referencia', $model->id_referencia)->exists();
-    //         if ($existingCarga) {
-    //             return false; // Si ya existe, abortar la creación del modelo
-    //         }
-    //     });
+        static::creating(function ($model) {
+            $existingCarga = Carga::where('id_referencia', $model->id_referencia)->exists();
+            if ($existingCarga) {
+                return false; // Si ya existe, abortar la creación del modelo
+            }
+        });
 
-    //     static::created(function ($model) {
-    //         $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
-    //         if ($vehiculo) {
-    //             $model->user_id = $vehiculo->user_id;
-    //             $model->save();
-    //         }
-    //     });
-    // }
+        // static::created(function ($model) {
+        //     $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
+        //     if ($vehiculo) {
+        //         $model->user_id = $vehiculo->user_id;
+        //         $model->save();
+        //     }
+        // });
+    }
 }
