@@ -30,7 +30,7 @@ class Recompensa extends Model
     public function obtenerReclamos()
     {
         return $this->historial()
-            ->where('tipo', 'incremento')
+            ->where('tipo', 'decremento')
             ->sum('cantidad');
     }
 }

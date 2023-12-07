@@ -25,4 +25,18 @@ class VehiculoController extends Controller
 
         return redirect()->route('cliente.show', compact('cliente'));
     }
+
+    function destroy(User $cliente, Request $request)
+    {
+        $id = $request->input('id'); // Obtener el ID enviado en la solicitud
+
+        // Verificar si el modelo con ese ID existe
+        $modelo = Vehiculo::find($id);
+
+        if ($modelo) {
+            $modelo->delete(); // Eliminar el modelo si se encuentra
+        }
+
+        return redirect()->route('cliente.show', compact('cliente'));
+    }
 }

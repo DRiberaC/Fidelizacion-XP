@@ -39,6 +39,7 @@ Route::controller(ClienteController::class)->prefix('/cliente')->name('cliente')
 Route::controller(VehiculoController::class)->prefix('/cliente/vehiculo')->name('vehiculo')->group(function () {
     Route::get('/cliente/{cliente}/crear-vehiculo', "create")->name('.create');
     Route::post('/cliente/{cliente}/store-vehiculo', "store")->name('.store');
+    Route::post('/cliente/{cliente}/destroy-vehiculo', "destroy")->name('.destroy');
 });
 
 

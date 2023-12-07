@@ -41,6 +41,8 @@ class CargaController extends Controller
 
     public function getcargafecha($fecha)
     {
+        $fn = $fecha;
+
         $fechaInicio = Carbon::createFromFormat('Y-m', $fecha)->startOfMonth();
         $fechaFin = Carbon::createFromFormat('Y-m', $fecha)->endOfMonth();
 
@@ -51,7 +53,6 @@ class CargaController extends Controller
             echo "Obteniendo datos de fecha $ff <br>";
             $this->procesarFecha($ff);
         }
-        $fn = now()->format('Y-m');
         return redirect()->route('carga.index', [$fn]);
     }
 

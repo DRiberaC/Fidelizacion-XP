@@ -11,10 +11,21 @@
                                 Cliente
                             </h1>
                         </div>
+
+                        <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                            <a href="#">
+                                <button
+                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                    type="button">
+                                    Reclamar Recompensa
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
             </div>
+
             <div class="p-8 mb-5">
                 <div>
                     <div class="px-4 sm:px-0">
@@ -96,10 +107,23 @@
                                                     </div>
                                                 </div>
                                                 <div class="ml-4 flex-shrink-0">
-                                                    <button
+                                                    {{-- <button
                                                         class="bg-red-600 hover:bg-red-500 text-white text-xs/[8px] font-bold py-2 px-4 rounded">
                                                         Eliminar
-                                                    </button>
+                                                    </button> --}}
+                                                    <form action="{{ route('vehiculo.destroy', [$cliente->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $vehiculo->id }}">
+                                                        <!-- Agregar más campos si es necesario -->
+
+                                                        <!-- Botón para enviar el formulario -->
+                                                        <button type="submit"
+                                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
+                                                            class="bg-red-600 hover:bg-red-500 text-white text-xs/[8px] font-bold py-2 px-4 rounded">
+                                                            Eliminar
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </li>
                                         @endforeach
