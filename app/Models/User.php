@@ -62,7 +62,7 @@ class User extends Authenticatable
     {
         $total = $this->cargas()
             ->where('precio', $price)
-            ->sum('cantidad');
+            ->sum('puntos');
         return $total;
     }
 

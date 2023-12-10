@@ -47,7 +47,7 @@
                                 Productos
                             </a>
                         </li>
-
+                        {{-- 
                         <li>
                             <details class="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary
@@ -79,7 +79,7 @@
                                         </a>
                                 </ul>
                             </details>
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </ul>

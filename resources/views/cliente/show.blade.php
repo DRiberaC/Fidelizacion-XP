@@ -13,13 +13,15 @@
                         </div>
 
                         <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <a href="#">
-                                <button
-                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                    type="button">
-                                    Reclamar Recompensa
+                            <form action="{{ route('cliente.sincronizar', [$cliente->id]) }}" method="POST">
+                                @csrf
+                                <!-- Botón para enviar el formulario -->
+                                <button type="submit"
+                                    onclick="return confirm('¿Estás seguro de que deseas sincronizar las cargas?')"
+                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring">
+                                    Sincronizar Cargas
                                 </button>
-                            </a>
+                            </form>
                         </div>
                     </div>
                 </div>

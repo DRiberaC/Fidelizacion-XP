@@ -34,7 +34,7 @@
                                     Apellido
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Puntos
+                                    NIT
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Opción
@@ -51,7 +51,7 @@
                                         {{ $cliente->last_name }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        0
+                                        {{ $cliente->ci_nit }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <a href="{{ route('cliente.show', $cliente) }}">

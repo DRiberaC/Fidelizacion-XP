@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carga;
+use App\Models\Producto;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Str;
 
 class ClienteController extends Controller
 {
@@ -52,6 +53,23 @@ class ClienteController extends Controller
 
     function show(User $cliente)
     {
+        return view('cliente.show', compact('cliente'));
+    }
+
+    function sincronizar(Request $request, User $cliente)
+    {
+        $vehiculos = $cliente->vehiculos;
+        foreach ($vehiculos as $vehiculo) {
+            $cargas = Carga::where('observacion', $vehiculo->placa)->get();
+            foreach ($cargas as $carga) {
+                if ($carga->fecha_venta >= $cliente->subscription_start) {
+                    $producto = Producto::where('precio', $carga->precio)->first();
+                    $carga->factor = $producto->factor;
+                    $carga->puntos = $carga->puntos * $producto->factor;
+                    $carga->save();
+                }
+            }
+        }
         return view('cliente.show', compact('cliente'));
     }
 }

@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/crear-cliente', "create")->name('.create');
         Route::post('/store-cliente', "store")->name('.store');
         Route::get('/ver-cliente/{cliente}', "show")->name('.show');
+
+        Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar');
     });
 
     Route::controller(VehiculoController::class)->prefix('/cliente/vehiculo')->name('vehiculo')->group(function () {
