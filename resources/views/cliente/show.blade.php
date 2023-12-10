@@ -46,7 +46,7 @@
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+                                <dt class="text-sm font-medium leading-6 text-gray-900">Usuario</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                     {{ $cliente->email }}</dd>
                             </div>
@@ -67,14 +67,14 @@
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Restantes</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">0</dd>
                             </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            {{-- <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Información</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Fugiat ipsum ipsum
                                     deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur
                                     qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia
                                     proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
                                 </dd>
-                            </div>
+                            </div> --}}
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Vehiculos</dt>
                                 <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">

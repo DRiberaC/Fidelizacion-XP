@@ -28,7 +28,7 @@ class ClienteController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'ci_nit' => 'required',
+            'ci_nit' => 'required|unique:users',
             'subscription_start' => 'required|date',
         ]);
 

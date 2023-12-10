@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Recompensa extends Model
+class Premio extends Model
 {
     use HasFactory;
+
+    protected $table = 'premios';
 
     protected $fillable = [
         'name',
@@ -17,20 +19,22 @@ class Recompensa extends Model
 
     public function historial()
     {
-        return $this->hasMany(RecompensaHistorial::class);
+        return $this->hasMany(PremioHistorial::class);
     }
 
     public function obtenerAdiciones()
     {
-        return $this->historial()
+        $adiciones = $this->historial()
             ->where('tipo', 'incremento')
             ->sum('cantidad');
+        return $adiciones;
     }
 
     public function obtenerReclamos()
     {
-        return $this->historial()
+        $reclamos = $this->historial()
             ->where('tipo', 'decremento')
             ->sum('cantidad');
+        return $reclamos;
     }
 }

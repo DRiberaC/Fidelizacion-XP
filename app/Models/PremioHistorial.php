@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecompensaHistorial extends Model
+class PremioHistorial extends Model
 {
     use HasFactory;
 
-    protected $table = 'recompensa_historial';
+    protected $table = 'premio_historial';
 
     protected $fillable = [
         'tipo',
         'cantidad',
         'detalle',
-        'recompensa_id',
+        'premio_id',
         'user_id'
     ];
 
@@ -30,6 +30,6 @@ class RecompensaHistorial extends Model
 
     public function recompensa()
     {
-        return $this->belongsTo(Recompensa::class, 'recompensa_id');
+        return $this->belongsTo(Premio::class, 'premio_id');
     }
 }

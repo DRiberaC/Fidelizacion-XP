@@ -15,9 +15,10 @@ class UserSeeder extends Seeder
     {
         $user = User::create([
             'name'     => 'Admin',
-            'email'    => 'admin@admin.com',
+            'ci_nit' => '0000000',
+            'email'    => 'admin@roes.com',
             'password' => bcrypt('password'),
-            'subscription_start' => '2023-01-01'
+            'subscription_start' => '2021-01-01'
         ]);
 
         $superAdminRole = Role::where('name', 'Super Admin')->first();

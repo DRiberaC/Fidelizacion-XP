@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recompensa;
-use App\Models\RecompensaHistorial;
+use App\Models\Premio;
+use App\Models\PremioHistorial;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\AuthManager;
 
-class RecompensaController extends Controller
+class PremioController extends Controller
 {
     function index()
     {
-        $recompensas = Recompensa::all();
-        return view('recompensa.index', compact('recompensas'));
+        $premios = Premio::all();
+        return view('premio.index', compact('premios'));
     }
 
     function create()
     {
-        return view('recompensa.create');
+        return view('premio.create');
     }
 
     function store(Request $request)
@@ -32,26 +30,26 @@ class RecompensaController extends Controller
         $detalle = $request->input('detalle');
         $puntos = $request->input('puntos');
 
-        Recompensa::create([
+        Premio::create([
             'name' => $name,
             'detalle' => $detalle,
             'puntos' => $puntos,
         ]);
 
-        return redirect()->route('recompensa.index');
+        return redirect()->route('premio.index');
     }
 
-    function historial(Recompensa $recompensa)
+    function historial(Premio $premio)
     {
-        return view('recompensa.historial', compact('recompensa'));
+        return view('premio.historial', compact('premio'));
     }
 
-    function historialcreate(Recompensa $recompensa)
+    function historialcreate(Premio $premio)
     {
-        return view('recompensa.historialcreate', compact('recompensa'));
+        return view('premio.historialcreate', compact('premio'));
     }
 
-    function historialstore(Request $request, Recompensa $recompensa)
+    function historialstore(Request $request, Premio $premio)
     {
         $request->validate([
             'cantidad' => 'required|integer',
@@ -60,17 +58,17 @@ class RecompensaController extends Controller
         $tipo = 'incremento';
         $cantidad = $request->input('cantidad');
         $detalle = $request->input('detalle');
-        $recompensa_id = $recompensa->id;
+        $premio_id = $premio->id;
         $user_id = auth()->user()->id;
 
-        RecompensaHistorial::create([
+        PremioHistorial::create([
             'tipo' => $tipo,
             'cantidad' => $cantidad,
             'detalle' => $detalle,
-            'recompensa_id' => $recompensa_id,
+            'premio_id' => $premio_id,
             'user_id' => $user_id,
         ]);
 
-        return redirect()->route('recompensa.index');
+        return redirect()->route('premio.index');
     }
 }

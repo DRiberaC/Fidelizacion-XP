@@ -8,16 +8,16 @@
                     <div class="sm:flex sm:items-center sm:justify-between">
                         <div class="text-center sm:text-left">
                             <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Lista de Recompensas
+                                Lista de Productos
                             </h1>
                         </div>
 
                         <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <a href="{{ route('recompensa.create') }}">
+                            <a href="{{ route('producto.create') }}">
                                 <button
                                     class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
                                     type="button">
-                                    Agregar Recompensa
+                                    Agregar Producto
                                 </button>
                             </a>
                         </div>
@@ -33,16 +33,10 @@
                                 Nombre
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Puntos
+                                Precio
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Cantidad
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Reclamados
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Saldo
+                                Factor
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 &nbsp;
@@ -51,35 +45,23 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($recompensas as $recompensa)
-                            @php
-                                $adiciones = $recompensa->obtenerAdiciones();
-                                $reclamos = $recompensa->obtenerReclamos();
-                                $total = $adiciones - $reclamos;
-                            @endphp
-
+                        @foreach ($productos as $producto)
                             <tr class="bg-white border-b">
                                 <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                    {{ $recompensa->name }}
+                                    {{ $producto->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $recompensa->puntos }}
+                                    {{ $producto->precio }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $adiciones }}
+                                    {{ $producto->factor }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $reclamos }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $total }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <a href="{{ route('recompensa.historial', [$recompensa]) }}">
+                                    <a href="#">
                                         <button
                                             class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
                                             type="button" value="Ver">
-                                            <span class="text-sm font-medium"> Ver Detalle </span>
+                                            <span class="text-sm font-medium"> Editar </span>
                                         </button>
                                     </a>
                                 </td>

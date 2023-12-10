@@ -35,9 +35,16 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('recompensa.index') }}"
+                            <a href="{{ route('premio.index') }}"
                                 class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
-                                Recompensas
+                                Premios
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('producto.index') }}"
+                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                Productos
                             </a>
                         </li>
 

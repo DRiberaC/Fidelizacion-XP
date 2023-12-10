@@ -23,6 +23,9 @@ return new class extends Migration
             $table->decimal('cantidad', 10, 2);
             $table->decimal('precio', 10, 2);
 
+            $table->decimal('factor', 10, 2)->nullable();
+            $table->decimal('puntos', 10, 2)->nullable();
+
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

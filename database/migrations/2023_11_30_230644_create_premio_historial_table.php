@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recompensa_historial', function (Blueprint $table) {
+        Schema::create('premio_historial', function (Blueprint $table) {
             $table->id();
 
             $table->string('tipo');
             $table->integer('cantidad');
             $table->string('detalle')->nullable();
 
-            $table->unsignedBigInteger('recompensa_id')->nullable();
-            $table->foreign('recompensa_id')->references('id')->on('recompensas')->onDelete('cascade');
+            $table->unsignedBigInteger('premio_id')->nullable();
+            $table->foreign('premio_id')->references('id')->on('premios')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recompensa_historials');
+        Schema::dropIfExists('premio_historial');
     }
 };

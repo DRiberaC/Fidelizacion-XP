@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Carga extends Model
 {
     use HasFactory;
+
+    protected $table = 'cargas';
+
     protected $fillable = [
         'id_referencia',
         'observacion',
@@ -19,6 +22,9 @@ class Carga extends Model
         'cantidad',
         'precio',
         'user_id',
+
+        'factor',
+        'puntos',
     ];
 
     public function user()
@@ -37,12 +43,22 @@ class Carga extends Model
             }
         });
 
-        // static::created(function ($model) {
-        //     $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
-        //     if ($vehiculo) {
-        //         $model->user_id = $vehiculo->user_id;
-        //         $model->save();
-        //     }
-        // });
+        static::created(function ($model) {
+            $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
+
+            $producto = Producto::where('precio', $model->precio)->first();
+            if ($producto) {
+                $model->factor = $producto->factor;
+            } else {
+                $model->factor = 1;
+            }
+
+            $model->puntos = $model->cantidad * $model->factor;
+
+            if ($vehiculo) {
+                $model->user_id = $vehiculo->user_id;
+                $model->save();
+            }
+        });
     }
 }
