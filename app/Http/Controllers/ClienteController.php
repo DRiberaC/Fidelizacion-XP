@@ -61,7 +61,7 @@ class ClienteController extends Controller
         $vehiculos = $cliente->vehiculos;
         foreach ($vehiculos as $vehiculo) {
 
-            $cargas = Carga::where('observacion', $vehiculo->placa)->get();
+            $cargas = Carga::where('observacion', $vehiculo->placa)->where('user_id', null)->get();
             foreach ($cargas as $carga) {
 
                 if ($carga->fecha_venta >= $cliente->subscription_start) {

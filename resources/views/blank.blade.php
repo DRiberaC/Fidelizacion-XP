@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @yield('styles')
     @vite('resources/css/app.css')
-    <title>Document</title>
+    <title>Fidelización ROES</title>
 </head>
 
 <body class="flex h-screen bg-gray-100">
