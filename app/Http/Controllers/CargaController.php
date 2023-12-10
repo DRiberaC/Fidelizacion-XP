@@ -94,22 +94,22 @@ class CargaController extends Controller
             $data = json_decode($content, true);
             foreach ($data as $item) {
 
-                $vehiculo = Vehiculo::where('placa', $item['observacion'])->first();
+                // $vehiculo = Vehiculo::where('placa', $item['observacion'])->first();
 
-                if ($vehiculo) {
-                    $carga = new Carga();
-                    $carga->id_referencia = $item['id'];
-                    $carga->observacion = $item['observacion'];
-                    $carga->total = $item['total'];
-                    $carga->nro_factura = $item['nro_factura'];
-                    $carga->fecha_venta = $item['fecha_venta'];
-                    $carga->razon_social = $item['razon_social'];
-                    $carga->nit = $item['nit'];
-                    $carga->cantidad = $item['cantidad'];
-                    $carga->precio = $item['precio'];
-                    $carga->user_id = $vehiculo->user->id;
-                    $carga->save();
-                }
+                // if ($vehiculo) {
+                $carga = new Carga();
+                $carga->id_referencia = $item['id'];
+                $carga->observacion = $item['observacion'];
+                $carga->total = $item['total'];
+                $carga->nro_factura = $item['nro_factura'];
+                $carga->fecha_venta = $item['fecha_venta'];
+                $carga->razon_social = $item['razon_social'];
+                $carga->nit = $item['nit'];
+                $carga->cantidad = $item['cantidad'];
+                $carga->precio = $item['precio'];
+                // $carga->user_id = $vehiculo->user->id;
+                $carga->save();
+                // }
             }
 
             // return redirect()->route('carga.index');
