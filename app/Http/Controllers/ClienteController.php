@@ -60,16 +60,23 @@ class ClienteController extends Controller
     {
         $vehiculos = $cliente->vehiculos;
         foreach ($vehiculos as $vehiculo) {
+
             $cargas = Carga::where('observacion', $vehiculo->placa)->get();
             foreach ($cargas as $carga) {
+
                 if ($carga->fecha_venta >= $cliente->subscription_start) {
+
                     $producto = Producto::where('precio', $carga->precio)->first();
+                    // echo "$carga <br>";
                     $carga->factor = $producto->factor;
-                    $carga->puntos = $carga->puntos * $producto->factor;
+                    $carga->puntos = $carga->cantidad * $producto->factor;
+                    $carga->user_id = $cliente->id;
                     $carga->save();
+                    // echo "$carga";
+                    // return 0;
                 }
             }
         }
-        return view('cliente.show', compact('cliente'));
+        return redirect()->route('cliente.show', compact('cliente'));
     }
 }
