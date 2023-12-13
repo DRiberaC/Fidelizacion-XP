@@ -33,22 +33,24 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::controller(ClienteController::class)->prefix('/cliente')->name('cliente')->group(function () {
-        Route::get('/', "index")->name('.index');
-        Route::get('/crear-cliente', "create")->name('.create');
-        Route::post('/store-cliente', "store")->name('.store');
+        Route::get('/', "index")->name('.index')->middleware('PermisoAdmin');
+        Route::get('/crear-cliente', "create")->name('.create')->middleware('PermisoAdmin');
+        Route::post('/store-cliente', "store")->name('.store')->middleware('PermisoAdmin');
         Route::get('/ver-cliente/{cliente}', "show")->name('.show');
+        Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar')->middleware('PermisoAdmin');
 
-        Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar');
+        Route::get('/buscar-cliente', "buscarCliente")->name('.buscarCliente');
+        Route::post('/buscar-cliente/placa', "buscarClientePlaca")->name('.buscarClientePlaca');
     });
 
-    Route::controller(VehiculoController::class)->prefix('/cliente/vehiculo')->name('vehiculo')->group(function () {
+    Route::controller(VehiculoController::class)->prefix('/cliente/vehiculo')->name('vehiculo')->middleware('PermisoAdmin')->group(function () {
         Route::get('/cliente/{cliente}/crear-vehiculo', "create")->name('.create');
         Route::post('/cliente/{cliente}/store-vehiculo', "store")->name('.store');
         Route::post('/cliente/{cliente}/destroy-vehiculo', "destroy")->name('.destroy');
     });
 
 
-    Route::controller(CargaController::class)->prefix('/carga')->name('carga')->group(function () {
+    Route::controller(CargaController::class)->prefix('/carga')->name('carga')->middleware('PermisoAdmin')->group(function () {
         // Route::get('/', "index")->name('.index');
         Route::get('/fecha/{fecha}', "index")->name('.index');
         Route::get('/obtener-fecha/{fecha}', "getcargafecha")->name('.obtenerfecha');
@@ -56,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/obtener-gargar-fecha-url', "getcargafecharango")->name('.getcargafecha');
     });
 
-    Route::controller(PremioController::class)->prefix('/premio')->name('premio')->group(function () {
+    Route::controller(PremioController::class)->prefix('/premio')->name('premio')->middleware('PermisoAdmin')->group(function () {
         Route::get('/', "index")->name('.index');
         Route::get('/crear-premio', "create")->name('.create');
         Route::post('/store-premio', "store")->name('.store');
@@ -66,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/historial/{premio}/store-historial', "historialstore")->name('.historialstore');
     });
 
-    Route::controller(ProductoController::class)->prefix('/producto')->name('producto')->group(function () {
+    Route::controller(ProductoController::class)->prefix('/producto')->name('producto')->middleware('PermisoAdmin')->group(function () {
         Route::get('/', "index")->name('.index');
         Route::get('/crear-producto', "create")->name('.create');
         Route::post('/store-producto', "store")->name('.store');

@@ -18,36 +18,37 @@
                 <h1 class="text-xl font-bold leading-none"><span class="text-indigo-600">Fidelización</span> ROES</h1>
             </div>
             <div class="p-4">
-                <ul class="space-y-1">
-                    <!-- Opciones del menú -->
+                @if (Auth::user()->hasRole('Super Admin'))
                     <ul class="space-y-1">
-                        <li>
-                            <a href="{{ route('cliente.index') }}"
-                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('cliente*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
-                                Clientes
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('carga.index', [date('Y-m')]) }}"
-                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('carga*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
-                                Cargas
-                            </a>
-                        </li>
+                        <!-- Opciones del menú -->
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="{{ route('cliente.index') }}"
+                                    class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('cliente*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                    Clientes
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('carga.index', [date('Y-m')]) }}"
+                                    class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('carga*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                    Cargas
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('premio.index') }}"
-                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
-                                Premios
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ route('premio.index') }}"
+                                    class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                    Premios
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('producto.index') }}"
-                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
-                                Productos
-                            </a>
-                        </li>
-                        {{-- 
+                            <li>
+                                <a href="{{ route('producto.index') }}"
+                                    class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('recompensa*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                    Productos
+                                </a>
+                            </li>
+                            {{-- 
                         <li>
                             <details class="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary
@@ -81,8 +82,19 @@
                             </details>
                         </li> --}}
 
+                        </ul>
                     </ul>
-                </ul>
+                @else
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="{{ route('cliente.buscarCliente') }}"
+                                class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('cliente*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                Buscar Cliente
+                            </a>
+                        </li>
+                    </ul>
+                @endif
+
             </div>
         </div>
 

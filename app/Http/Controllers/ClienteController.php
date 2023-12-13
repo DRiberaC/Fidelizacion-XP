@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Carga;
 use App\Models\Producto;
 use App\Models\User;
+use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -78,5 +79,24 @@ class ClienteController extends Controller
             }
         }
         return redirect()->route('cliente.show', compact('cliente'));
+    }
+
+    function buscarCliente()
+    {
+        return view('cliente.buscar');
+    }
+
+    function buscarClientePlaca(Request $request)
+    {
+        $placa = $request->input('placa');
+        $vehiculo = Vehiculo::where('placa', $placa)->first();
+
+        if ($vehiculo) {
+            $cliente = $vehiculo->user->id;
+            return redirect()->route('cliente.show', compact('cliente'));
+        }
+
+        return back()->with('error', 'No se encontró la placa : ' . $placa);
+        // return view('cliente.buscar');
     }
 }
