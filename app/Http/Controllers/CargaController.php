@@ -35,7 +35,7 @@ class CargaController extends Controller
     {
         $fecha = now()->format('Y-m-d'); // Obtiene la fecha actual
         $this->procesarFecha($fecha);
-        $fn = now()->format('Y-m');
+        $fn = now()->format('Y-m-d');
         return redirect()->route('carga.index', [$fn]);
     }
 
