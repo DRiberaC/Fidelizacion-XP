@@ -57,7 +57,7 @@ class Carga extends Model
 
             if ($vehiculo) {
                 $model->user_id = $vehiculo->user_id;
-                $model->save();
+                // $model->save();
             }
         });
     }
