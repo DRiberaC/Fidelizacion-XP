@@ -72,5 +72,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', "index")->name('.index');
         Route::get('/crear-producto', "create")->name('.create');
         Route::post('/store-producto', "store")->name('.store');
+        Route::get('/editar-producto/{producto}', "edit")->name('.edit');
+        Route::post('/update-producto/{producto}', "update")->name('.update');
     });
 });

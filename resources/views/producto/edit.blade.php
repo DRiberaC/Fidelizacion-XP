@@ -67,7 +67,7 @@
                                         Factor
                                     </label>
                                     <div class="mt-2">
-                                        <input type="number" name="factor" value="{{ $producto->factor }}"
+                                        <input type="text" name="factor" value="{{ $producto->factor }}"
                                             class="block w-full rounded-md border-0 p-2  text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
                                     </div>
                                 </div>
