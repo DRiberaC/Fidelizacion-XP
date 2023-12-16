@@ -76,13 +76,23 @@
                                     {{ $total }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="{{ route('premio.historial', [$premio]) }}">
-                                        <button
-                                            class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                            type="button" value="Ver">
-                                            <span class="text-sm font-medium"> Ver Detalle </span>
-                                        </button>
-                                    </a>
+                                    <div class="flex space-x-4">
+                                        <a href="{{ route('premio.edit', [$premio]) }}">
+                                            <button
+                                                class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
+                                                type="button" value="Ver">
+                                                <span class="text-sm font-medium"> Editar </span>
+                                            </button>
+                                        </a>
+
+                                        <a href="{{ route('premio.historial', [$premio]) }}">
+                                            <button
+                                                class="rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                                type="button" value="Ver">
+                                                <span class="text-sm font-medium"> Ver Detalle </span>
+                                            </button>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

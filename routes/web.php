@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', "index")->name('.index');
         Route::get('/crear-premio', "create")->name('.create');
         Route::post('/store-premio', "store")->name('.store');
+        Route::get('/editar-premio/{premio}', "edit")->name('.edit');
+        Route::post('/update-premio/{premio}', "update")->name('.update');
 
         Route::get('/historial/{premio}', "historial")->name('.historial');
         Route::get('/historial/{premio}/crear-historial', "historialcreate")->name('.historialcreate');

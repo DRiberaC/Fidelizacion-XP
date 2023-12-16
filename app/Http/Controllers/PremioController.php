@@ -39,6 +39,32 @@ class PremioController extends Controller
         return redirect()->route('premio.index');
     }
 
+    function edit(Premio $premio)
+    {
+        return view('premio.edit', compact('premio'));
+    }
+
+    function update(Request $request, Premio $premio)
+    {
+        $request->validate([
+            'name' => 'required',
+            'puntos' => 'required|integer',
+        ]);
+
+        $id = $request->input('id');
+        $name = $request->input('name');
+        $detalle = $request->input('detalle');
+        $puntos = $request->input('puntos');
+
+        Premio::where('id', $id)->update([
+            'name' => $name,
+            'detalle' => $detalle,
+            'puntos' => $puntos,
+        ]);
+
+        return redirect()->route('premio.index');
+    }
+
     function historial(Premio $premio)
     {
         return view('premio.historial', compact('premio'));
