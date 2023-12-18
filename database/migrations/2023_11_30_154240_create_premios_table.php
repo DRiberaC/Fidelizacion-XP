@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->text('detalle')->nullable();
-            $table->integer('puntos');
+            $table->decimal('puntos', 10, 2);
 
             $table->timestamps();
         });

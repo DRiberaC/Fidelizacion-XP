@@ -60,6 +60,8 @@
                                 $gas = $cliente->getGAS();
                                 $dis = $cliente->getDIS();
                                 $ggd = $gnv + $gas + $dis;
+
+                                $reclamados = $cliente->puntosReclamados();
                             @endphp
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Obtenidos</dt>
@@ -67,18 +69,22 @@
                                     {{ $ggd }}
                                 </dd>
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Reclamados</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">0</dd>
+                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $reclamados }}
+                                </dd>
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Restantes</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">0</dd>
                             </div>
-                            {{-- <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Información</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Fugiat ipsum ipsum
-                                    deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur
-                                    qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-                                    proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-gray-900">Premio</dt>
+                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <a href="{{ route('cliente.darPremio', [$cliente]) }}">
+                                        <button
+                                            class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
+                                            Dar Premio
+                                        </button>
+                                    </a>
                                 </dd>
-                            </div> --}}
+                            </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Vehiculos</dt>
                                 <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">

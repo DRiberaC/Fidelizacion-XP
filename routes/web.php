@@ -38,6 +38,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store-cliente', "store")->name('.store')->middleware('PermisoAdmin');
         Route::get('/ver-cliente/{cliente}', "show")->name('.show');
         Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar')->middleware('PermisoAdmin');
+        Route::get('/dar-premio/{cliente}', "darPremio")->name('.darPremio');
+
+        Route::post('/set-premio/{cliente}', "setPremio")->name('.setPremio');
+
+
 
         Route::get('/buscar-cliente', "buscarCliente")->name('.buscarCliente');
         Route::post('/buscar-cliente/placa', "buscarClientePlaca")->name('.buscarClientePlaca');
@@ -62,8 +67,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', "index")->name('.index');
         Route::get('/crear-premio', "create")->name('.create');
         Route::post('/store-premio', "store")->name('.store');
+
+        Route::post('/get-premio', "getPremio")->name('.getPremio');
+
         Route::get('/editar-premio/{premio}', "edit")->name('.edit');
         Route::post('/update-premio/{premio}', "update")->name('.update');
+
+
 
         Route::get('/historial/{premio}', "historial")->name('.historial');
         Route::get('/historial/{premio}/crear-historial', "historialcreate")->name('.historialcreate');

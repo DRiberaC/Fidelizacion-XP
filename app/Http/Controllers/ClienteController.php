@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carga;
+use App\Models\Premio;
+use App\Models\PremioHistorial;
 use App\Models\Producto;
 use App\Models\User;
 use App\Models\Vehiculo;
@@ -40,7 +42,7 @@ class ClienteController extends Controller
         $email = "$ci_nit@roes.com";
         $password = bcrypt('password');
 
-        $user = User::create([
+        $cliente = User::create([
             'name' => $name,
             'last_name' => $last_name,
             'ci_nit' => $ci_nit,
@@ -49,12 +51,72 @@ class ClienteController extends Controller
             'password' => $password,
         ]);
 
-        return redirect()->route('cliente.index');
+        return redirect()->route('cliente.show', compact('cliente'));
+        // return redirect()->route('cliente.index');
     }
 
     function show(User $cliente)
     {
         return view('cliente.show', compact('cliente'));
+    }
+
+    function darPremio(User $cliente)
+    {
+        $premios = Premio::all();
+        return view('cliente.premiar', compact('cliente', 'premios'));
+    }
+
+    function setPremio(Request $request, User $cliente)
+    {
+
+        $gnv = $cliente->getGNV();
+        $gas = $cliente->getGAS();
+        $dis = $cliente->getDIS();
+        $ggd = $gnv + $gas + $dis;
+        $reclamados = $cliente->puntosReclamados();
+
+        $puntosD = $ggd - $reclamados;
+        $premios = $request->input('premio');
+
+        $puntosN = 0;
+
+        foreach ($premios as $premio) {
+            $cantidad = $premio['cantidad'];
+            $premio_id = $premio['premio_id'];
+            $pp = Premio::find($premio_id);
+            $puntosN += $cantidad * $pp->puntos;
+            $ad = $pp->obtenerAdiciones();
+            $re = $pp->obtenerReclamos();
+            $saldo = $ad - $re;
+
+            if ($cantidad > $saldo) {
+                return back()->with('error', "Existencias de $pp->name insuficientes.");
+            }
+        }
+
+        if ($puntosD >= $puntosN) {
+            foreach ($premios as $premio) {
+                $tipo = 'decremento';
+                $cantidad = $premio['cantidad'];
+                $detalle = $request->input('detalle');
+                $premio_id = $premio['premio_id'];
+                $user_id = $cliente->id;
+                $pp = Premio::find($premio_id);
+
+                PremioHistorial::create([
+                    'tipo' => $tipo,
+                    'cantidad' => $cantidad,
+                    'puntos' => $pp->puntos,
+                    'detalle' => $detalle,
+                    'premio_id' => $premio_id,
+                    'user_id' => $user_id,
+                ]);
+            }
+        } else {
+            return back()->with('error', 'Puntos insuficientes.');
+        }
+
+        return redirect()->route('cliente.show', compact('cliente'));
     }
 
     function sincronizar(Request $request, User $cliente)

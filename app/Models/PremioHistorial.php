@@ -14,6 +14,7 @@ class PremioHistorial extends Model
     protected $fillable = [
         'tipo',
         'cantidad',
+        'puntos',
         'detalle',
         'premio_id',
         'user_id'

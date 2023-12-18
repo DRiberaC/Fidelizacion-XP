@@ -29,6 +29,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="{{ route('cliente.buscarCliente') }}"
+                                    class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('cliente/buscar-cliente') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
+                                    Buscar Placa
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('carga.index', [date('Y-m')]) }}"
                                     class="block rounded-lg px-4 py-3 text-sm font-medium {{ request()->is('carga*') ? ' text-gray-900 bg-gray-100' : ' text-gray-500 hover:bg-gray-100 hover:text-gray-700' }} ">
                                     Cargas

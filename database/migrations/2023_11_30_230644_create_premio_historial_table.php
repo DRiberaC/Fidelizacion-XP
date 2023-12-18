@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('tipo');
             $table->integer('cantidad');
+            $table->decimal('puntos');
             $table->string('detalle')->nullable();
 
             $table->unsignedBigInteger('premio_id')->nullable();

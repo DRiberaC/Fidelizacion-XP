@@ -23,7 +23,7 @@ class PremioController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'puntos' => 'required|integer',
+            'puntos' => 'required|numeric',
         ]);
 
         $name = $request->input('name');
@@ -48,7 +48,7 @@ class PremioController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'puntos' => 'required|integer',
+            'puntos' => 'required|numeric',
         ]);
 
         $id = $request->input('id');
@@ -63,6 +63,13 @@ class PremioController extends Controller
         ]);
 
         return redirect()->route('premio.index');
+    }
+
+    function getPremio(Request $request)
+    {
+        $name = $request->input('name');
+        $premio = Premio::where('name', $name)->first();
+        return response()->json($premio);
     }
 
     function historial(Premio $premio)
@@ -90,6 +97,7 @@ class PremioController extends Controller
         PremioHistorial::create([
             'tipo' => $tipo,
             'cantidad' => $cantidad,
+            'puntos' => $premio->puntos,
             'detalle' => $detalle,
             'premio_id' => $premio_id,
             'user_id' => $user_id,
