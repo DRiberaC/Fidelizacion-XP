@@ -118,4 +118,51 @@ class CargaController extends Controller
             // Manejar otros códigos de estado si es necesario
         }
     }
+
+    public function recibirCarga(Request $request)
+    {
+
+        // Obtener la matriz de datos JSON enviada desde C#
+        $datos = $request->json()->all();
+
+        // Verificar si hay datos
+        if (!empty($datos)) {
+            foreach ($datos as $dato) {
+                // Crear una nueva instancia del modelo Carga
+                $carga = new Carga();
+                $carga->id_referencia = $dato['id'];
+                $carga->observacion = $dato['observacion'];
+                $carga->total = $dato['total'];
+                $carga->nro_factura = $dato['nro_factura'];
+                $carga->fecha_venta = $dato['fecha_venta'];
+                $carga->razon_social = $dato['razon_social'];
+                $carga->nit = $dato['nit'];
+                $carga->cantidad = $dato['cantidad'];
+                $carga->precio = $dato['precio'];
+
+                // Guardar el objeto Carga en la base de datos
+                $carga->save();
+            }
+
+            return response()->json(['message' => 'Datos guardados correctamente'], 200);
+        }
+
+        return response()->json(['message' => 'No se recibieron datos válidos'], 400);
+    }
+    // {
+
+
+
+    //     $carga = new Carga();
+    //     $carga->id_referencia = $item['id'];
+    //     $carga->observacion = $item['observacion'];
+    //     $carga->total = $item['total'];
+    //     $carga->nro_factura = $item['nro_factura'];
+    //     $carga->fecha_venta = $item['fecha_venta'];
+    //     $carga->razon_social = $item['razon_social'];
+    //     $carga->nit = $item['nit'];
+    //     $carga->cantidad = $item['cantidad'];
+    //     $carga->precio = $item['precio'];
+    //     $carga->save();
+    // }
 }

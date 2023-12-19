@@ -26,6 +26,11 @@ Route::get('/', function () {
     }
 });
 
+Route::controller(CargaController::class)->prefix('/cargas')->name('cargas')->group(function () {
+    // Route::get('/', "index")->name('.index');
+    Route::post('/recibirCarga', "recibirCarga")->name('.recibirCarga');
+});
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', function () {
@@ -55,12 +60,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-    Route::controller(CargaController::class)->prefix('/carga')->name('carga')->middleware('PermisoAdmin')->group(function () {
+    Route::controller(CargaController::class)->prefix('/carga')->name('carga')->group(function () {
         // Route::get('/', "index")->name('.index');
-        Route::get('/fecha/{fecha}', "index")->name('.index');
-        Route::get('/obtener-fecha/{fecha}', "getcargafecha")->name('.obtenerfecha');
-        Route::get('/obtener-gargar-fecha', "getcarga")->name('.getcarga');
-        Route::post('/obtener-gargar-fecha-url', "getcargafecharango")->name('.getcargafecha');
+        Route::post('/recibirCarga', "recibirCarga")->name('.recibirCarga');
+
+        Route::get('/fecha/{fecha}', "index")->name('.index')->middleware('PermisoAdmin');
+        Route::get('/obtener-fecha/{fecha}', "getcargafecha")->name('.obtenerfecha')->middleware('PermisoAdmin');
+        Route::get('/obtener-gargar-fecha', "getcarga")->name('.getcarga')->middleware('PermisoAdmin');
+        Route::post('/obtener-gargar-fecha-url', "getcargafecharango")->name('.getcargafecha')->middleware('PermisoAdmin');
     });
 
     Route::controller(PremioController::class)->prefix('/premio')->name('premio')->middleware('PermisoAdmin')->group(function () {
