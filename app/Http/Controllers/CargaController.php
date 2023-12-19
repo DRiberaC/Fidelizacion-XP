@@ -15,7 +15,10 @@ class CargaController extends Controller
     function index($fecha)
     {
         // $cargas = Carga::where('fecha_venta', $fecha)->get();
-        $cargas = Carga::where('fecha_venta', 'LIKE', "$fecha-%")->orderBy('fecha_venta', 'desc')->get();
+        $cargas = Carga::where('fecha_venta', 'LIKE', "$fecha-%")
+            ->orderBy('fecha_venta', 'desc')
+            ->orderBy('nro_factura', 'desc')
+            ->get();
 
         // return $cargas;
 
