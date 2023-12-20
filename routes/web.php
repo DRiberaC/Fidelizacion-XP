@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 Route::controller(CargaController::class)->prefix('/cargas')->name('cargas')->group(function () {
     Route::post('/recibirCarga', "recibirCarga")->name('.recibirCarga');
-    Route::post('/lastCarga', "lastCarga")->name('.lastCarga');
+    Route::get('/lastCarga', "lastCarga")->name('.lastCarga');
 });
 
 Route::middleware(['auth'])->group(function () {
