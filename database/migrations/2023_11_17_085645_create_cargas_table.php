@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('observacion');
             $table->decimal('total', 10, 2);
             $table->integer('nro_factura');
-            $table->date('fecha_venta');
+            $table->dateTime('fecha_venta');
             $table->string('razon_social');
             $table->string('nit');
             $table->decimal('cantidad', 10, 2);

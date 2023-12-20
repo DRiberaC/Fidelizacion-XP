@@ -1,7 +1,7 @@
 @extends('blank')
 
 @section('styles')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"> --}}
 @endsection
@@ -18,7 +18,7 @@
                             </h1>
                         </div>
 
-                        <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+                        {{-- <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
                             <a href="{{ route('carga.getcarga') }}">
                                 <button
                                     class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
@@ -26,7 +26,7 @@
                                     Obtener Cargas de Fecha
                                 </button>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -43,13 +43,7 @@
                         </a>
                     </div>
                     <div class="flex justify-center">
-                        <a href="#">
-                            <button
-                                class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                type="button">
-                                Cargas de Fecha {{ $fecha_act }}
-                            </button>
-                        </a>
+                        Cargas de Fecha {{ $fecha_act }}
                     </div>
                     <div class="flex justify-center">
                         <a href="{{ route('carga.index', [$fecha_sig]) }}">
@@ -63,10 +57,8 @@
                     </div>
                 </div>
 
-
-                <div class="relative overflow-x-auto rounded-2xl ">
-                    <table id="lista"
-                        class="table compact stripe w-full text-sm text-left rtl:text-right text-gray-500">
+                <div class="relative overflow-x-auto">
+                    <table class="table compact stripe w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-black uppercase bg-gray-100 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
@@ -93,36 +85,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($cargas as $cargas)
+                            @foreach ($cargas as $carga)
                                 <tr class="bg-white border-b">
                                     <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        @if ($cargas->user)
-                                            {{ $cargas->user->name }}
+                                        @if ($carga->user)
+                                            {{ $carga->user->name }}
                                         @endif
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        {{ $cargas->observacion }}
+                                        {{ $carga->observacion }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ $cargas->fecha_venta }}
+                                        {{ $carga->fecha_venta }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $cargas->nro_factura }}
+                                        {{ $carga->nro_factura }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $cargas->cantidad }}
+                                        {{ $carga->cantidad }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $cargas->precio }}
+                                        {{ $carga->precio }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $cargas->total }}
+                                        {{ $carga->total }}
                                     </td>
                                 </tr>
                             @endforeach
 
                         </tbody>
                     </table>
+                    <div class="mt-8">
+                        {{ $cargas->links() }}
+                    </div>
                 </div>
 
             </div>
@@ -131,7 +126,7 @@
 @endsection
 
 
-@section('scripts')
+{{-- @section('scripts')
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
@@ -147,4 +142,4 @@
             iDisplayLength: 25
         });
     </script>
-@endsection
+@endsection --}}
