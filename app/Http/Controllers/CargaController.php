@@ -55,6 +55,6 @@ class CargaController extends Controller
     function lastCarga()
     {
         $carga = Carga::latest('fecha_venta')->first();
-        return response()->json(['fecha' => $carga->fecha_venta], 200);
+        return response()->json($carga->fecha_venta, 200);
     }
 }
