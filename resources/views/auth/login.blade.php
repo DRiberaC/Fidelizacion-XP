@@ -59,13 +59,8 @@
                         </a>
 
                         <h1 class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                            Welcome to Squid 🦑
+                            Sistema de Fidelización ROES
                         </h1>
-
-                        <p class="mt-4 leading-relaxed text-gray-500">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-                            nam dolorum aliquam, quibusdam aperiam voluptatum.
-                        </p>
                     </div>
 
                     <form class="mt-8 grid grid-cols-12 gap-12" action="{{ route('login') }}" method="POST">
