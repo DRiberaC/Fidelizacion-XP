@@ -145,6 +145,12 @@ class ClienteController extends Controller
         return redirect()->route('cliente.show', compact('cliente'));
     }
 
+    function listapremios(User $cliente)
+    {
+        $premios = CabeceraPremioHistorial::where('user_id', $cliente->id)->orderBy('created_at', 'desc')->get();
+        return view('cliente.listapremios', compact('premios'));
+    }
+
     function sincronizar(Request $request, User $cliente)
     {
         $vehiculos = $cliente->vehiculos;

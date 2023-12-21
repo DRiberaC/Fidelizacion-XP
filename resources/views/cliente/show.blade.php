@@ -83,12 +83,23 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Premio</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <a href="{{ route('cliente.darPremio', [$cliente]) }}">
-                                        <button
-                                            class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
-                                            Dar Premio
-                                        </button>
-                                    </a>
+                                    <div class="flex space-x-4">
+
+                                        <a href="{{ route('cliente.darPremio', [$cliente]) }}">
+                                            <button
+                                                class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
+                                                Dar Premio
+                                            </button>
+                                        </a>
+
+                                        <a href="{{ route('cliente.listapremios', [$cliente]) }}">
+                                            <button
+                                                class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
+                                                type="button" value="Ver">
+                                                <span class="text-sm font-medium"> Ver Premios Recibidos </span>
+                                            </button>
+                                        </a>
+                                    </div>
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
