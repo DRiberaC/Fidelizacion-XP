@@ -34,6 +34,12 @@
                 <div>
                     <div class="px-4 sm:px-0">
                         <h3 class="text-base font-semibold leading-7 text-gray-900">Información Personal</h3>
+                        <a href="{{ route('cliente.edit', [$cliente]) }}">
+                            <button
+                                class="bg-violet-600 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded text-xs">
+                                Editar
+                            </button>
+                        </a>
                     </div>
                     <div class="mt-6 border-t border-gray-100">
                         <dl class="divide-y divide-gray-100">

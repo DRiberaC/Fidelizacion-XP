@@ -11,22 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('premio_historial', function (Blueprint $table) {
+        Schema::create('cabecera_premio_historial', function (Blueprint $table) {
             $table->id();
 
-            $table->string('tipo');
-            $table->integer('cantidad');
-            $table->decimal('puntos');
             $table->string('detalle')->nullable();
-
-            $table->unsignedBigInteger('premio_id')->nullable();
-            $table->foreign('premio_id')->references('id')->on('premios')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->unsignedBigInteger('cabecera_id')->nullable();
-            $table->foreign('cabecera_id')->references('id')->on('cabecera_premio_historial')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -37,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('premio_historial');
+        Schema::dropIfExists('cabecera_premio_historial');
     }
 };

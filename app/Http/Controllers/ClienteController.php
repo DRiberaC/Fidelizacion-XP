@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CabeceraPremioHistorial;
 use App\Models\Carga;
 use App\Models\Premio;
 use App\Models\PremioHistorial;
@@ -60,6 +61,25 @@ class ClienteController extends Controller
         return view('cliente.show', compact('cliente'));
     }
 
+    function edit(User $cliente)
+    {
+        return view('cliente.edit', compact('cliente'));
+    }
+
+    function update(Request $request, User $cliente)
+    {
+        $name = $request->input('name');
+        $last_name = $request->input('last_name');
+        $ci_nit = $request->input('ci_nit');
+
+        $cliente->name = $name;
+        $cliente->last_name = $last_name;
+        $cliente->ci_nit = $ci_nit;
+        $cliente->save();
+
+        return redirect()->route('cliente.show', compact('cliente'));
+    }
+
     function darPremio(User $cliente)
     {
         $premios = Premio::all();
@@ -103,6 +123,11 @@ class ClienteController extends Controller
                 $user_id = $cliente->id;
                 $pp = Premio::find($premio_id);
 
+                $cabecera = CabeceraPremioHistorial::create([
+                    'detalle' => $detalle,
+                    'user_id' => $user_id,
+                ]);
+
                 PremioHistorial::create([
                     'tipo' => $tipo,
                     'cantidad' => $cantidad,
@@ -110,6 +135,7 @@ class ClienteController extends Controller
                     'detalle' => $detalle,
                     'premio_id' => $premio_id,
                     'user_id' => $user_id,
+                    'cabecera_id' => $cabecera->id
                 ]);
             }
         } else {

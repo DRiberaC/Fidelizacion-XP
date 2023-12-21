@@ -17,7 +17,8 @@ class PremioHistorial extends Model
         'puntos',
         'detalle',
         'premio_id',
-        'user_id'
+        'user_id',
+        'cabecera_id'
     ];
 
     protected $casts = [
@@ -27,6 +28,11 @@ class PremioHistorial extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function cabecera()
+    {
+        return $this->belongsTo(CabeceraPremioHistorial::class, 'cabecera_id');
     }
 
     public function recompensa()

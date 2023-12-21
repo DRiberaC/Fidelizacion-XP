@@ -41,6 +41,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', "index")->name('.index')->middleware('PermisoAdmin');
         Route::get('/crear-cliente', "create")->name('.create')->middleware('PermisoAdmin');
         Route::post('/store-cliente', "store")->name('.store')->middleware('PermisoAdmin');
+        Route::get('/editar-cliente/{cliente}', "edit")->name('.edit')->middleware('PermisoAdmin');
+        Route::post('/update-cliente/{cliente}', "update")->name('.update')->middleware('PermisoAdmin');
+
         Route::get('/ver-cliente/{cliente}', "show")->name('.show');
         Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar')->middleware('PermisoAdmin');
         Route::get('/dar-premio/{cliente}', "darPremio")->name('.darPremio');

@@ -53,7 +53,7 @@
                                     <td class="px-6 py-4">
                                         {{ $cliente->ci_nit }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    {{-- <td class="px-6 py-4">
                                         <a href="{{ route('cliente.show', $cliente) }}">
                                             <button
                                                 class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
@@ -61,6 +61,25 @@
                                                 <span class="text-sm font-medium"> Ver Datos </span>
                                             </button>
                                         </a>
+                                    </td> --}}
+                                    <td class="px-6 py-4">
+                                        <div class="flex space-x-4">
+                                            <a href="{{ route('cliente.edit', [$cliente]) }}">
+                                                <button
+                                                    class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
+                                                    type="button" value="Ver">
+                                                    <span class="text-sm font-medium"> Editar </span>
+                                                </button>
+                                            </a>
+
+                                            <a href="{{ route('cliente.show', $cliente) }}">
+                                                <button
+                                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                                    type="button" value="Ver">
+                                                    <span class="text-sm font-medium"> Ver Datos </span>
+                                                </button>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
