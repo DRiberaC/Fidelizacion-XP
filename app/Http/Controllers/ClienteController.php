@@ -148,7 +148,12 @@ class ClienteController extends Controller
     function listapremios(User $cliente)
     {
         $premios = CabeceraPremioHistorial::where('user_id', $cliente->id)->orderBy('created_at', 'desc')->get();
-        return view('cliente.listapremios', compact('premios'));
+        return view('cliente.listapremios', compact('premios', 'cliente'));
+    }
+
+    function ticket(User $cliente, CabeceraPremioHistorial $premio)
+    {
+        return view('cliente.ticket', compact('premio', 'cliente'));
     }
 
     function sincronizar(Request $request, User $cliente)

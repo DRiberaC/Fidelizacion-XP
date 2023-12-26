@@ -67,7 +67,7 @@
                                 </td> --}}
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-4">
-                                        <a href="#">
+                                        <a href="{{ route('cliente.ticket', [$cliente->id, $premio->id]) }}">
                                             <button
                                                 class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
                                                 type="button" value="Ver">
@@ -75,13 +75,13 @@
                                             </button>
                                         </a>
 
-                                        <a href="#">
+                                        {{-- <a href="#">
                                             <button
                                                 class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
                                                 type="button" value="Ver">
                                                 <span class="text-sm font-medium"> PDF </span>
                                             </button>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </td>
                             </tr>
