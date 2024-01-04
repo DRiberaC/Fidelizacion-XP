@@ -86,9 +86,9 @@
                 Volver
             </button>
         </a>
-        <button id="btnImprimir" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        {{-- <button id="btnImprimir" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Imprimir
-        </button>
+        </button> --}}
     </div>
 
     <script>
