@@ -11,7 +11,7 @@
 
 <body class="flex h-screen bg-gray-100">
 
-    <aside class="bg-white w-60 border-r overflow-y-auto h-screen flex flex-col">
+    <aside class="bg-white w-60 border-r overflow-y-auto h-screen flex flex-col print:hidden">
         <div>
             <!-- Contenido del menú -->
             <div class="px-4 py-6 text-center border-b">

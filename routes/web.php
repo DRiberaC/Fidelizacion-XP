@@ -47,8 +47,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/ver-cliente/{cliente}', "show")->name('.show');
         Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar')->middleware('PermisoAdmin');
 
-        Route::get('/ver-cliente/{cliente}/lista-premios', "listapremios")->name('.listapremios')->middleware('PermisoAdmin');
-        Route::get('/ver-cliente/{cliente}/ticket/{premio}', "ticket")->name('.ticket')->middleware('PermisoAdmin');
+        Route::get('/ver-cliente/{cliente}/lista-premios', "listapremios")->name('.listapremios');
+        Route::get('/ver-cliente/{cliente}/ticket/{premio}', "ticket")->name('.ticket');
 
         Route::get('/dar-premio/{cliente}', "darPremio")->name('.darPremio');
 

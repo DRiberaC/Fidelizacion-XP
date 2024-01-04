@@ -45,8 +45,16 @@
                         <dl class="divide-y divide-gray-100">
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Nombre Completo</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $cliente->name }}
-                                    {{ $cliente->last_name }}
+                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{ $cliente->name }}&nbsp;{{ $cliente->last_name }}
+                                </dd>
+                                <dt class="text-sm font-medium leading-6 text-gray-900">CI/NIT</dt>
+                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{ $cliente->ci_nit }}
+                                </dd>
+                                <dt class="text-sm font-medium leading-6 text-gray-900">Telefono</dt>
+                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{ $cliente->telefono }}
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

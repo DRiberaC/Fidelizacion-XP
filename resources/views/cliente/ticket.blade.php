@@ -1,95 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('blank')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Estación de Servicio ROES</title>
-</head>
+@section('content')
+    <div class="px-2 py-2">
+        <div class="max-w-7xl mx-auto">
 
-<body>
-    <div class="ticket">
-        {{-- <img src="./logo.png" alt="Logo"> --}}
-        <p class="centered">
-            Estación de Servicio
-        </p>
-        <p class="centered">
-            ROES
-        </p>
-        <p class="right-aligned">
-            Fecha: {{ $premio->created_at->format('Y-m-d') }}
-        </p>
-        <p class="right-left">
-            Cliente: {{ $cliente->name }}
-        </p>
-        <table>
-            <thead>
-                <tr>
-                    <th class="quantity">Cant.</th>
-                    <th class="description">Descrición</th>
-                    <th class="price">$$</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $puntos = 0;
-                @endphp
-                @foreach ($premio->premioHistoriales as $item)
-                    <tr>
-                        <td class="quantity">{{ $item->cantidad }}</td>
-                        <td class="description">{{ $item->recompensa->name }}</td>
-                        <td class="price">{{ $item->puntos }}</td>
-                    </tr>
+            <div class="p-8 mb-5">
+                <div class="text-xs">
+                    <p class="text-center font-bold">
+                        Estación de Servicio ROES
+                    </p>
+                    <p class="text-center">
+                        Fecha: {{ date('Y-m-d') }}
+                    </p>
+                    <p class="text-center">
+                        Cliente: {{ $cliente->name }}
+                    </p>
+
+                    <hr class="my-2">
+
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="w-1/3">Cant.</th>
+                                <th class="w-1/3">Descrición</th>
+                                <th class="w-1/3 text-right">Puntos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $puntos = 0;
+                            @endphp
+                            @foreach ($premio->premioHistoriales as $item)
+                                <tr>
+                                    <td class="w-1/3 text-center">{{ $item->cantidad }}</td>
+                                    <td class="w-1/3 text-center">{{ $item->recompensa->name }}</td>
+                                    <td class="w-1/3 text-right">{{ $item->puntos }}</td>
+                                </tr>
+                                @php
+                                    $puntos += $item->puntos * $item->cantidad;
+                                @endphp
+                            @endforeach
+                            <tr>
+                                <td class="w-1/3 text-right" colspan="2">Total puntos</td>
+                                <td class="w-1/3 text-right">{{ $puntos }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <hr class="my-2">
                     @php
-                        $puntos += $item->puntos * $item->cantidad;
+                        $gnv = $cliente->getGNV();
+                        $gas = $cliente->getGAS();
+                        $dis = $cliente->getDIS();
+                        $ggd = $gnv + $gas + $dis;
+
+                        $reclamados = $cliente->puntosReclamados();
+
+                        $puntosrestantes = $ggd - $reclamados;
                     @endphp
-                @endforeach
-                <tr>
-                    {{-- <td class="quantity">{{ $item->cantidad }}</td> --}}
-                    <td colspan="2" class="description">Total puntos</td>
-                    <td class="price">{{ $puntos }}</td>
-                </tr>
-            </tbody>
-        </table>
+                    <p class="text-center">
+                        Puntos Acumulados: {{ $ggd }}
+                    </p>
+                    <p class="text-center">
+                        Puntos Utilizados: {{ $reclamados }}
+                    </p>
+                    <p class="text-center">
+                        Puntos Restantes: {{ $puntosrestantes }}
+                    </p>
 
-        <hr>
+                    <hr class="my-2">
 
-        @php
-            $gnv = $cliente->getGNV();
-            $gas = $cliente->getGAS();
-            $dis = $cliente->getDIS();
-            $ggd = $gnv + $gas + $dis;
+                    <p class="text-center">
+                        Firma {{ $cliente->name }}
+                    </p>
+                </div>
 
-            $reclamados = $cliente->puntosReclamados();
+            </div>
 
-            $puntosrestantes = $ggd - $reclamados;
-        @endphp
-
-        <p class="right-left">
-            Puntos Acumulados: {{ $ggd }}
-        </p>
-        <p class="right-left">
-            Puntos Utilizados: {{ $reclamados }}
-        </p>
-        <p class="right-left">
-            Puntos Restantes: {{ $puntosrestantes }}
-        </p>
-        <br><br>
-        <p class="centered">
-            <hr>
-            Firma {{ $cliente->name }}
-        </p>
-        <br><br>
+        </div>
     </div>
-    <button id="btnPrint" class="hidden-print">Imprimir</button>
-</body>
+    <div class="flex justify-center mt-4 print:hidden">
 
-</html>
-<script>
-    const $btnPrint = document.querySelector("#btnPrint");
-    $btnPrint.addEventListener("click", () => {
-        window.print();
-    });
-</script>
+        <a href="{{ route('cliente.listapremios', [$cliente]) }}">
+            <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
+                Volver
+            </button>
+        </a>
+        <button id="btnImprimir" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Imprimir
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('btnImprimir').onclick = function() {
+            window.print(); // Esta función imprime el contenido de la página actual
+        };
+    </script>
+@endsection

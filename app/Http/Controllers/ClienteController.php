@@ -39,6 +39,7 @@ class ClienteController extends Controller
 
         $name = $request->input('name');
         $last_name = $request->input('last_name');
+        $telefono = $request->input('telefono');
         $ci_nit = $request->input('ci_nit');
         $email = "$ci_nit@roes.com";
         $password = bcrypt('password');
@@ -47,6 +48,7 @@ class ClienteController extends Controller
             'name' => $name,
             'last_name' => $last_name,
             'ci_nit' => $ci_nit,
+            'telefono' => $telefono,
             'subscription_start' => $request->input('subscription_start'),
             'email' => $email,
             'password' => $password,
@@ -71,10 +73,12 @@ class ClienteController extends Controller
         $name = $request->input('name');
         $last_name = $request->input('last_name');
         $ci_nit = $request->input('ci_nit');
+        $telefono = $request->input('telefono');
 
         $cliente->name = $name;
         $cliente->last_name = $last_name;
         $cliente->ci_nit = $ci_nit;
+        $cliente->telefono = $telefono;
         $cliente->save();
 
         return redirect()->route('cliente.show', compact('cliente'));
