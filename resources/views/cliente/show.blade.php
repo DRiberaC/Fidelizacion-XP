@@ -110,6 +110,14 @@
                                                 <span class="text-sm font-medium"> Ver Premios Recibidos </span>
                                             </button>
                                         </a>
+
+                                        <a href="{{ route('cliente.cargasCliente', [$cliente]) }}">
+                                            <button
+                                                class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
+                                                type="button" value="Ver">
+                                                <span class="text-sm font-medium"> Ver Cargas </span>
+                                            </button>
+                                        </a>
                                     </div>
                                 </dd>
                             </div>

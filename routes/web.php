@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update-cliente/{cliente}', "update")->name('.update')->middleware('PermisoAdmin');
 
         Route::get('/ver-cliente/{cliente}', "show")->name('.show');
+        Route::get('/ver-cliente/{cliente}/cargas', "cargasCliente")->name('.cargasCliente');
         Route::post('/ver-cliente/{cliente}/sincronizar', "sincronizar")->name('.sincronizar')->middleware('PermisoAdmin');
 
         Route::get('/ver-cliente/{cliente}/lista-premios', "listapremios")->name('.listapremios');

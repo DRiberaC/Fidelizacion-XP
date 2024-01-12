@@ -88,6 +88,16 @@ class ClienteController extends Controller
         return redirect()->route('cliente.show', compact('cliente'));
     }
 
+    function cargasCliente(User $cliente)
+    {
+        $pag = env('PAGINATE', 10);
+        $cargas = Carga::where('user_id', $cliente->id)
+            ->orderBy('fecha_venta', 'desc')
+            ->orderBy('nro_factura', 'desc')
+            ->paginate($pag); // Cambia 10 por el número de resultados por página que desees
+        return view('cliente.cargasCliente', compact('cliente', 'cargas'));
+    }
+
     function darPremio(User $cliente)
     {
         $premios = Premio::all();
