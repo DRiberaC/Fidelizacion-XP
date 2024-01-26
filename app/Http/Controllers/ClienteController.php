@@ -16,6 +16,8 @@ use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
+use Fpdf\Fpdf;
+
 class ClienteController extends Controller
 {
     function index()
@@ -133,18 +135,21 @@ class ClienteController extends Controller
         }
 
         if ($puntosD >= $puntosN) {
-            foreach ($premios as $premio) {
-                $tipo = 'decremento';
-                $cantidad = $premio['cantidad'];
-                $detalle = $request->input('detalle');
-                $premio_id = $premio['premio_id'];
-                $user_id = $cliente->id;
-                $pp = Premio::find($premio_id);
 
-                $cabecera = CabeceraPremioHistorial::create([
-                    'detalle' => $detalle,
-                    'user_id' => $user_id,
-                ]);
+            $detalle = $request->input('detalle');
+            $user_id = $cliente->id;
+
+            $cabecera = CabeceraPremioHistorial::create([
+                'detalle' => $detalle,
+                'user_id' => $user_id,
+            ]);
+
+            foreach ($premios as $premio) {
+
+                $premio_id = $premio['premio_id'];
+                $pp = Premio::find($premio_id);
+                $cantidad = $premio['cantidad'];
+                $tipo = 'decremento';
 
                 PremioHistorial::create([
                     'tipo' => $tipo,
@@ -171,51 +176,112 @@ class ClienteController extends Controller
 
     function ticket(User $cliente, CabeceraPremioHistorial $premio)
     {
+        // dd($premio->premioHistoriales);
+        $pdf = new FPDF('P', 'mm', array(80, 150)); // Tamaño tickt 80mm x 150 mm (largo aprox)
+        $pdf->AddPage();
 
-        // $nombre_impresora = "POS-58";
-        $nombre_impresora = env('NOMBRE_IMPRESORA');
+        // CABECERA
+        $pdf->SetFont('Helvetica', '', 12);
+        $pdf->Cell(60, 4, mb_convert_encoding('Estación de Servicio ROES', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
-        $connector = new WindowsPrintConnector($nombre_impresora);
-        $printer = new Printer($connector);
+        // DATOS FACTURA        
+        $pdf->Ln(5);
+        $pdf->SetFont('Helvetica', '', 8);
+        $pdf->Cell(60, 4, 'Fecha: ' . date("Y-m-d H:i:s"), 0, 1, '');
+        $pdf->Cell(60, 4, "Cliente: " . mb_convert_encoding($cliente->name, 'ISO-8859-1', 'UTF-8'), 0, 1, '');
+        // $pdf->Cell(60, 4, 'Factura Simpl.: F2019-000001', 0, 1, '');
+        // $pdf->Cell(60, 4, 'Fecha: 28/10/2019', 0, 1, '');
+        // $pdf->Cell(60, 4, 'Metodo de pago: Tarjeta', 0, 1, '');
 
+        // COLUMNAS
+        $pdf->SetFont('Helvetica', 'B', 7);
+        $pdf->Cell(30, 10, 'Articulo', 0);
+        $pdf->Cell(5, 10, 'Und', 0, 0, 'R');
+        $pdf->Cell(10, 10, 'Puntos', 0, 0, 'R');
+        $pdf->Cell(15, 10, 'Total', 0, 0, 'R');
+        $pdf->Ln(8);
+        $pdf->Cell(60, 0, '', 'T');
+        $pdf->Ln(0);
 
-        # Vamos a alinear al centro lo próximo que imprimamos
-        $printer->setJustification(Printer::JUSTIFY_CENTER);
-
-        $printer->text("Estación de Servicio ROES" . "\n");
-        #La fecha también
-        $printer->text("Fecha" . date("Y-m-d H:i:s") . "\n");
-        $printer->text("Cliente" . $cliente->name . "\n");
-
+        // PRODUCTOS
 
         # Para mostrar el total
         $puntos = 0;
+        $pdf->SetFont('Helvetica', '', 7);
         foreach ($premio->premioHistoriales as $item) {
             $puntos += $item->puntos * $item->cantidad;
 
-            /*Alinear a la izquierda para la cantidad y el nombre*/
-            $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text($item->cantidad . "x" . $item->recompensa->name . "\n");
-
-            /*Y a la derecha para el importe*/
-            $printer->setJustification(Printer::JUSTIFY_RIGHT);
-            $printer->text('Pnt. ' . $item->puntos . "\n");
+            $pdf->MultiCell(30, 5, mb_convert_encoding($item->recompensa->name, 'ISO-8859-1', 'UTF-8'), 0, 'L');
+            $pdf->Cell(35, -4, $item->cantidad, 0, 0, 'R');
+            $pdf->Cell(10, -4, $item->puntos, 0, 0, 'R');
+            $pdf->Cell(15, -4, $item->puntos * $item->cantidad, 0, 0, 'R');
+            $pdf->Ln(1);
         }
 
-        $printer->text("--------\n");
-        $printer->text("TOTAL: $" . $puntos . "\n");
+        // SUMATORIO DE LOS PRODUCTOS Y EL IVA
+        $pdf->Ln(4);
+        $pdf->Cell(60, 0, '', 'T');
+        $pdf->Ln(1);
+        $pdf->SetFont('Helvetica', 'B', 7);
+        $pdf->Cell(25, 10, '', 0);
+        $pdf->Cell(20, 10, '', 0);
+        $pdf->Cell(15, 10, 'TOTAL: ' . $puntos, 0, 0, 'R');
+        $pdf->Ln(1);
 
-        $printer->setJustification(Printer::JUSTIFY_CENTER);
-        $printer->text("--------------------");
-        $printer->text("FIRMA: " . $cliente->name . "\n");
+        // PIE DE PAGINA
+        $pdf->SetFont('Helvetica', '', 8);
+        $pdf->Ln(10);
+        $pdf->Cell(60, 0, '______________', 0, 1, 'C');
+        $pdf->Ln(5);
+        $pdf->Cell(60, 0, 'FIRMA: ' . mb_convert_encoding($cliente->name, 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
-        $printer->feed(2);
+        $pdf->Output('ticket.pdf', 'f');
+        $pdf->Output('ticket.pdf', 'i');
 
-        $printer->cut();
+        // // $nombre_impresora = "POS-58";
+        // $nombre_impresora = env('NOMBRE_IMPRESORA');
 
-        $printer->close();
+        // $connector = new WindowsPrintConnector($nombre_impresora);
+        // $printer = new Printer($connector);
 
-        return view('cliente.ticket', compact('premio', 'cliente'));
+
+        // # Vamos a alinear al centro lo próximo que imprimamos
+        // $printer->setJustification(Printer::JUSTIFY_CENTER);
+
+        // $printer->text("Estación de Servicio ROES" . "\n");
+        // #La fecha también
+        // $printer->text("Fecha" . date("Y-m-d H:i:s") . "\n");
+        // $printer->text("Cliente" . $cliente->name . "\n");
+
+
+        // # Para mostrar el total
+        // $puntos = 0;
+        // foreach ($premio->premioHistoriales as $item) {
+        //     $puntos += $item->puntos * $item->cantidad;
+
+        //     /*Alinear a la izquierda para la cantidad y el nombre*/
+        //     $printer->setJustification(Printer::JUSTIFY_LEFT);
+        //     $printer->text($item->cantidad . "x" . $item->recompensa->name . "\n");
+
+        //     /*Y a la derecha para el importe*/
+        //     $printer->setJustification(Printer::JUSTIFY_RIGHT);
+        //     $printer->text('Pnt. ' . $item->puntos . "\n");
+        // }
+
+        // $printer->text("--------\n");
+        // $printer->text("TOTAL: $" . $puntos . "\n");
+
+        // $printer->setJustification(Printer::JUSTIFY_CENTER);
+        // $printer->text("--------------------");
+        // $printer->text("FIRMA: " . $cliente->name . "\n");
+
+        // $printer->feed(2);
+
+        // $printer->cut();
+
+        // $printer->close();
+
+        // return view('cliente.ticket', compact('premio', 'cliente'));
     }
 
     function sincronizar(Request $request, User $cliente)
