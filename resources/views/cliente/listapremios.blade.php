@@ -67,7 +67,8 @@
                                 </td> --}}
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-4">
-                                        <a href="{{ route('cliente.ticket', [$cliente->id, $premio->id]) }}">
+                                        <a href="{{ route('cliente.ticket', [$cliente->id, $premio->id]) }}"
+                                            target="_blank">
                                             <button
                                                 class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
                                                 type="button" value="Ver">
