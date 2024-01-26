@@ -178,6 +178,7 @@ class ClienteController extends Controller
     {
         // dd($premio->premioHistoriales);
         $pdf = new FPDF('P', 'mm', array(80, 150)); // Tamaño tickt 80mm x 150 mm (largo aprox)
+        $pdf->SetMargins(10, 5, 10); // Establecer todos los márgenes a cero
         $pdf->AddPage();
 
         // CABECERA
