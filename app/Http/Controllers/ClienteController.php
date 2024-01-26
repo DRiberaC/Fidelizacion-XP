@@ -239,7 +239,7 @@ class ClienteController extends Controller
         $pdf->Output(public_path('ticket.pdf'), 'F');
 
         // Mostrar el PDF en el navegador
-        return response()->file(public_path('ticket.pdf'));
+        // return response()->file(public_path('ticket.pdf'));
 
         // $pdf->Output('ticket.pdf', 'f');
         // $pdf->Output('ticket.pdf', 'i');
