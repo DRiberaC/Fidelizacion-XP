@@ -12,9 +12,9 @@ use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
-use Mike42\Escpos\Printer;
-use Mike42\Escpos\EscposImage;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+// use Mike42\Escpos\Printer;
+// use Mike42\Escpos\EscposImage;
+// use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 use Fpdf\Fpdf;
 
@@ -235,51 +235,14 @@ class ClienteController extends Controller
         $pdf->Ln(5);
         $pdf->Cell(60, 0, 'FIRMA: ' . mb_convert_encoding($cliente->name, 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
-        $pdf->Output('ticket.pdf', 'f');
-        $pdf->Output('ticket.pdf', 'i');
+        // Guardar el PDF en el servidor
+        $pdf->Output(public_path('ticket.pdf'), 'F');
 
-        // // $nombre_impresora = "POS-58";
-        // $nombre_impresora = env('NOMBRE_IMPRESORA');
+        // Mostrar el PDF en el navegador
+        return response()->file(public_path('ticket.pdf'));
 
-        // $connector = new WindowsPrintConnector($nombre_impresora);
-        // $printer = new Printer($connector);
-
-
-        // # Vamos a alinear al centro lo próximo que imprimamos
-        // $printer->setJustification(Printer::JUSTIFY_CENTER);
-
-        // $printer->text("Estación de Servicio ROES" . "\n");
-        // #La fecha también
-        // $printer->text("Fecha" . date("Y-m-d H:i:s") . "\n");
-        // $printer->text("Cliente" . $cliente->name . "\n");
-
-
-        // # Para mostrar el total
-        // $puntos = 0;
-        // foreach ($premio->premioHistoriales as $item) {
-        //     $puntos += $item->puntos * $item->cantidad;
-
-        //     /*Alinear a la izquierda para la cantidad y el nombre*/
-        //     $printer->setJustification(Printer::JUSTIFY_LEFT);
-        //     $printer->text($item->cantidad . "x" . $item->recompensa->name . "\n");
-
-        //     /*Y a la derecha para el importe*/
-        //     $printer->setJustification(Printer::JUSTIFY_RIGHT);
-        //     $printer->text('Pnt. ' . $item->puntos . "\n");
-        // }
-
-        // $printer->text("--------\n");
-        // $printer->text("TOTAL: $" . $puntos . "\n");
-
-        // $printer->setJustification(Printer::JUSTIFY_CENTER);
-        // $printer->text("--------------------");
-        // $printer->text("FIRMA: " . $cliente->name . "\n");
-
-        // $printer->feed(2);
-
-        // $printer->cut();
-
-        // $printer->close();
+        // $pdf->Output('ticket.pdf', 'f');
+        // $pdf->Output('ticket.pdf', 'i');
 
         // return view('cliente.ticket', compact('premio', 'cliente'));
     }
