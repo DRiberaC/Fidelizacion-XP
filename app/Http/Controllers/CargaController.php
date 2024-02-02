@@ -55,6 +55,10 @@ class CargaController extends Controller
     function lastCarga()
     {
         $carga = Carga::latest('fecha_venta')->first();
-        return response()->json($carga->fecha_venta, 200);
+
+        // Obtener la fecha formateada sin la hora
+        $fechaVenta = Carbon::parse($carga->fecha_venta)->format('Y-m-d');
+
+        return response()->json($fechaVenta, 200);
     }
 }
