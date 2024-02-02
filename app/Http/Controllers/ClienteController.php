@@ -188,6 +188,7 @@ class ClienteController extends Controller
         // DATOS FACTURA        
         $pdf->Ln(5);
         $pdf->SetFont('Helvetica', '', 8);
+        $pdf->Cell(60, 4, mb_convert_encoding('N° Transcacción: ', 'ISO-8859-1', 'UTF-8') . $premio->id, 0, 1, '');
         $pdf->Cell(60, 4, 'Fecha: ' . date("Y-m-d H:i:s"), 0, 1, '');
         $pdf->Cell(60, 4, "Cliente: " . mb_convert_encoding($cliente->name, 'ISO-8859-1', 'UTF-8'), 0, 1, '');
         // $pdf->Cell(60, 4, 'Factura Simpl.: F2019-000001', 0, 1, '');
@@ -220,14 +221,36 @@ class ClienteController extends Controller
         }
 
         // SUMATORIO DE LOS PRODUCTOS Y EL IVA
-        $pdf->Ln(4);
+        $pdf->Ln(2);
         $pdf->Cell(60, 0, '', 'T');
         $pdf->Ln(1);
         $pdf->SetFont('Helvetica', 'B', 7);
-        $pdf->Cell(25, 10, '', 0);
-        $pdf->Cell(20, 10, '', 0);
-        $pdf->Cell(15, 10, 'TOTAL: ' . $puntos, 0, 0, 'R');
+        $pdf->Cell(25, 5, '', 0);
+        $pdf->Cell(20, 5, '', 0);
+        $pdf->Cell(15, 5, 'TOTAL: ' . $puntos, 0, 0, 'R');
         $pdf->Ln(1);
+
+        $gnv = $cliente->getGNV();
+        $gas = $cliente->getGAS();
+        $dis = $cliente->getDIS();
+        $ggd = $gnv + $gas + $dis;
+
+        $reclamados = $cliente->puntosReclamados();
+
+        $puntosrestantes = $ggd - $reclamados;
+
+        $pdf->Cell(25, 5, 'Puntos Obtenidos: ' . $ggd, 0);
+        $pdf->Cell(25, 5, '', 0);
+        $pdf->Cell(25, 5, '', 0);
+        $pdf->Ln(4);
+        $pdf->Cell(20, 5, 'Puntos Reclamados: ' . $reclamados, 0);
+        $pdf->Cell(25, 5, '', 0);
+        $pdf->Cell(25, 5, '', 0);
+        $pdf->Ln(4);
+        $pdf->Cell(15, 5, 'Puntos Restantes: ' . $puntosrestantes, 0);
+        $pdf->Cell(25, 5, '', 0);
+        $pdf->Cell(25, 5, '', 0);
+
 
         // PIE DE PAGINA
         $pdf->SetFont('Helvetica', '', 8);
