@@ -189,7 +189,8 @@ class ClienteController extends Controller
         $pdf->Ln(5);
         $pdf->SetFont('Helvetica', '', 8);
         $pdf->Cell(60, 4, mb_convert_encoding('N° Transcacción: ', 'ISO-8859-1', 'UTF-8') . $premio->id, 0, 1, '');
-        $pdf->Cell(60, 4, 'Fecha: ' . date("Y-m-d H:i:s"), 0, 1, '');
+        // $pdf->Cell(60, 4, 'Fecha: ' . date("Y-m-d H:i:s"), 0, 1, '');
+        $pdf->Cell(60, 4, 'Fecha: ' . $premio->created_at, 0, 1, '');
         $pdf->Cell(60, 4, "Cliente: " . mb_convert_encoding($cliente->name, 'ISO-8859-1', 'UTF-8'), 0, 1, '');
         // $pdf->Cell(60, 4, 'Factura Simpl.: F2019-000001', 0, 1, '');
         // $pdf->Cell(60, 4, 'Fecha: 28/10/2019', 0, 1, '');
