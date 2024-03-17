@@ -46,6 +46,7 @@ class PremioController extends Controller
 
     function update(Request $request, Premio $premio)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required',
             'puntos' => 'required|numeric',
@@ -103,6 +104,7 @@ class PremioController extends Controller
             'user_id' => $user_id,
         ]);
 
-        return redirect()->route('premio.index');
+        return view('premio.historial', compact('premio'));
+        // return redirect()->route('premio.index');
     }
 }

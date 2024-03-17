@@ -1,34 +1,30 @@
-@extends('blank')
-
+@extends('layouts.backend')
 @section('content')
-    <div class="px-2 py-2">
-        <div class="max-w-7xl mx-auto">
-            <div class="p-2 mb-1">
-                <div class="mx-auto max-w-screen-xl p-2">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="text-center sm:text-left">
-                            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Sistema de Fidelización ROES
-                            </h1>
-                        </div>
+    <div class="content">
+        <div class="row items-push">
 
-                        {{-- <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <a href="#">
-                                <button
-                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                    type="button">
-                                    Button
-                                </button>
-                            </a>
-                        </div> --}}
+            <div class="col-sm-6 col-xxl-3">
+                <!-- New Customers -->
+                <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                    <div
+                        class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
+                        <dl class="mb-0">
+                            <dt class="fs-3 fw-bold">{{ count($users) }}</dt>
+                            <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Clientes</dd>
+                        </dl>
+                        <div class="item item-rounded-lg bg-body-light">
+                            <i class="far fa-user-circle fs-3 text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="bg-body-light rounded-bottom">
+                        <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
+                            href="{{ route('cliente.index') }}">
+                            <span>Ver todos los Clientes</span>
+                            <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
+                        </a>
                     </div>
                 </div>
-
-            </div>
-            <div class="p-8 mb-5">
-                <h1 class="text-3xl font-bold mb-10">
-                    {{-- Lorem, ipsum --}}
-                </h1>
+                <!-- END New Customers -->
             </div>
 
         </div>

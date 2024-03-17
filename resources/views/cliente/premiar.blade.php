@@ -1,117 +1,107 @@
-@extends('blank')
-
+@extends('layouts.backend')
 @section('content')
-    <div class="px-2 py-2">
-        <div class="max-w-7xl mx-auto">
-            <div class="p-2 mb-1">
-                <div class="mx-auto max-w-screen-xl p-2">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="text-center sm:text-left">
-                            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Premiar Cliente <a href="{{ route('cliente.show', $cliente) }}"> {{ $cliente->name }}
-                                    {{ $cliente->last_name }}</a>
-                            </h1>
-                        </div>
+    <div class="content">
 
-                        @if (session('error'))
-                            <div role="alert">
-                                <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-                                    Errors
-                                </div>
-                                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-                                    <p> {{ session('error') }}</p>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="col-lg-4 alert alert-warning alert-dismissible" role="alert">
+                    <p class="mb-0">
+                        {{ $error }}
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            @endforeach
+        @endif
+        <form action="{{ route('cliente.setPremio', [$cliente->id]) }}" method="POST"enctype="multipart/form-data">
+            <div class="block block-rounded">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Formulario de registro de clientess</h3>
+                </div>
+                <div class="block-content block-content-full">
 
-            </div>
-            <div class="p-8 mb-5">
-
-                <form action="{{ route('cliente.setPremio', [$cliente->id]) }}" method="POST">
                     @csrf
-                    <div class="space-y-12">
-                        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                            <div class="sm:col-span-2 sm:col-start-1">
-                                <label for="premio" class="block text-sm font-medium leading-6 text-gray-900">
-                                    Premios
-                                </label>
-                                <div class="mt-2">
-                                    <input type="text" name="premio" list="lista" id="premio"
-                                        class="block w-full rounded-md border-0 p-2  text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">
-                                </div>
-
-                                <datalist id="lista">
+                    <div class="row push">
+                        <div class="col-lg-4">
+                            <div class="mb-4">
+                                <label class="form-label" for="name">Premios</label>
+                                <select class="js-select2 form-select" id="premio" name="premio" style="width: 100%;"
+                                    data-placeholder="Selecciona uno...">
+                                    <option></option>
+                                    <!-- Required for data-placeholder attribute to work with Select2 plugin -->
                                     @foreach ($premios as $premio)
-                                        <option value="{{ $premio->name }}">Puntos: {{ $premio->puntos }}</option>
+                                        <option value="{{ $premio->name }}">{{ $premio->name }} - Puntos:
+                                            {{ $premio->puntos }}</option>
                                     @endforeach
-                                </datalist>
-
-                                <div class="flex justify-end mt-2">
-                                    <button type="button" onclick="AddProducto()"
-                                        class="rounded-md bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-sm px-3 py-2">Agregar</button>
+                                </select>
+                            </div>
+                            <div class="row items-push">
+                                <div class="">
+                                    <button type="button" class="btn btn-alt-info" onclick="AddProducto()">Agregar</button>
                                 </div>
                             </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="detalle"
-                                    class="block text-sm font-medium leading-6 text-gray-900">Detalle</label>
-                                <div class="mt-2">
-                                    <textarea name="detalle"
-                                        class="block w-full rounded-md border-0 p-2  text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
-                                        rows="4"></textarea>
-                                </div>
-                            </div>
-
                         </div>
-
-                    </div>
-                    <div class="mt-4">
-
-                        <div class="relative overflow-x-auto rounded-2xl ">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                                <thead class="text-xs text-black uppercase bg-gray-100 ">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            Premio
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Puntos
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Cantidad
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Total Puntos
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Opción
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="lista-premios">
-                                </tbody>
-                            </table>
+                        <div class="col-lg-4 col-xl-5">
+                            <div class="mb-4">
+                                <label class="form-label" for="detalle">Detalle</label>
+                                <textarea class="form-control" id="detalle" name="detalle" rows="4" placeholder="Detalle..."></textarea>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="mt-6 flex items-center justify-end gap-x-6">
-                        <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-                        <button type="submit"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+                    <div class="row items-push">
+                        <div class="col-lg-7 offset-lg-4">
+                            <button type="submit" class="btn btn-alt-primary">Guardar</button>
+                        </div>
                     </div>
-                </form>
 
+                </div>
             </div>
 
-        </div>
+            <div class="block block-rounded">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Lista de premios</h3>
+                </div>
+                <div class="block-content">
+                    <table class="table table-striped table-vcenter">
+                        <thead>
+                            <tr>
+                                <th>Premio</th>
+                                <th class="text-center">Puntos</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Total Puntos</th>
+                                <th class="text-center">Opción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-premios">
+                            {{-- <tr>
+                            <td class="fw-semibold fs-sm">Scott Young</td>
+                            <td class="fw-semibold fs-sm">Scott Young</td>
+                            <td class="fw-semibold fs-sm">Scott Young</td>
+                            <td class="fw-semibold fs-sm">Scott Young</td>
+                            <td class="fw-semibold fs-sm">Scott Young</td>
+                        </tr> --}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+
     </div>
-    {{-- <input type="number"> --}}
 @endsection
 
-@section('scripts')
+@section('js_after')
+    <!-- jQuery -->
+    <script src="/js/lib/jquery.min.js"></script>
+
+    <!-- Page JS Plugins -->
+    {{-- <script src="/js/plugins/flatpickr/flatpickr.min.js"></script> --}}
+    <script src="/js/plugins/select2/js/select2.full.min.js"></script>
+
+    <!-- Page JS Helpers (Flatpickr + BS Datepicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider + BS Colorpicker plugins) -->
+    <script>
+        One.helpersOnLoad(['jq-select2']);
+    </script>
+    {{-- @endsection @section('scripts') --}}
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js"></script>
     <script>
         let url = '{{ route('premio.getPremio') }}';
@@ -126,6 +116,7 @@
                 .then(function(response) {
                     console.log(response.data);
                     let premio = response.data;
+                    // console.log(premio);
                     // Crear el elemento tr
                     var nuevoElemento = document.createElement('tr');
                     nuevoElemento.classList.add('bg-white', 'border-b');
@@ -134,23 +125,26 @@
                     var contenido =
                         '<input type="hidden" name="premio[' + productoIndex + '][premio_id]" value="' + premio.id +
                         '">' +
-                        '<th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">' + premio
-                        .name + '</th>' +
+                        '<th scope="row" class="fw-semibold fs-sm">' + premio.name + '</th>' +
                         '<td class="px-6 py-4">' +
                         '<input type="text" readonly value="' + premio.puntos +
-                        '" class="inppuntos block rounded-md border-0 p-2 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">' +
+                        '" class="inppuntos form-control form-control-sm">' +
                         '</td>' +
                         '<td class="px-6 py-4">' +
                         '<div class="mt-2">' +
                         '<input type="number" min="1" name="premio[' + productoIndex +
-                        '][cantidad]" value="1" class="inpcantidad block rounded-md border-0 p-2 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">' +
+                        '][cantidad]" value="1" class="inpcantidad form-control form-control-sm">' +
                         '</div>' +
                         '</td>' +
                         '<td class="px-6 py-4">' +
-                        '<input type="text" readonly value="0" class="inptotal block rounded-md border-0 p-2 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6">' +
+                        '<input type="text" readonly value="0" class="inptotal form-control form-control-sm">' +
                         '</td>' +
                         '<td class="px-6 py-4">' +
-                        '<button type="submit" class="btnEliminar bg-red-600 hover:bg-red-500 text-white text-xs/[8px] font-bold py-2 px-4 rounded">Eliminar</button>' +
+                        '<div class="btn-group">' +
+                        '<button type="button" class="btnEliminar btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" title="" data-bs-original-title="Remove Client">' +
+                        '<i class="fa fa-fw fa-times"></i>' +
+                        '</button>' +
+                        '</div>' +
                         '</td>';
 
                     // Establecer el contenido en el elemento tr
@@ -160,8 +154,9 @@
                     document.getElementById("lista-premios").appendChild(nuevoElemento);
                     CargarEventos();
                     productoIndex++;
+                    console.log(productoIndex);
 
-                    document.getElementById("premio").value = "";
+                    // document.getElementById("premio").value = "";
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -206,6 +201,9 @@
         };
     </script>
 @endsection
-{{--
 
-     --}}
+@section('css_before')
+    <!-- Page JS Plugins CSS -->
+    {{-- <link rel="stylesheet" href="/js/plugins/flatpickr/flatpickr.min.css"> --}}
+    <link rel="stylesheet" href="/js/plugins/select2/css/select2.min.css">
+@endsection

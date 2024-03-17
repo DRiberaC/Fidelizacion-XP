@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargaController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PremioController;
@@ -13,8 +14,8 @@ use App\Http\Controllers\VehiculoController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
@@ -26,15 +27,11 @@ Route::get('/', function () {
     }
 });
 
-Route::controller(CargaController::class)->prefix('/cargas')->name('cargas')->group(function () {
-    Route::post('/recibirCarga', "recibirCarga")->name('.recibirCarga');
-    Route::get('/lastCarga', "lastCarga")->name('.lastCarga');
-});
-
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', function () {
-        return view('home');
+        $users = User::all();
+        return view('home', compact('users'));
     });
 
     Route::controller(ClienteController::class)->prefix('/cliente')->name('cliente')->group(function () {
@@ -65,11 +62,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/cliente/{cliente}/destroy-vehiculo', "destroy")->name('.destroy');
     });
 
-
-    Route::controller(CargaController::class)->prefix('/carga')->name('carga')->group(function () {
-        Route::get('/fecha/{fecha}', "index")->name('.index')->middleware('PermisoAdmin');
-    });
-
     Route::controller(PremioController::class)->prefix('/premio')->name('premio')->middleware('PermisoAdmin')->group(function () {
         Route::get('/', "index")->name('.index');
         Route::get('/crear-premio', "create")->name('.create');
@@ -80,11 +72,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editar-premio/{premio}', "edit")->name('.edit');
         Route::post('/update-premio/{premio}', "update")->name('.update');
 
-
-
         Route::get('/historial/{premio}', "historial")->name('.historial');
         Route::get('/historial/{premio}/crear-historial', "historialcreate")->name('.historialcreate');
         Route::post('/historial/{premio}/store-historial', "historialstore")->name('.historialstore');
+    });
+
+    Route::controller(CargaController::class)->prefix('/carga')->name('carga')->group(function () {
+        Route::get('/fecha/{fecha}', "index")->name('.index')->middleware('PermisoAdmin');
     });
 
     Route::controller(ProductoController::class)->prefix('/producto')->name('producto')->middleware('PermisoAdmin')->group(function () {
@@ -95,3 +89,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update-producto/{producto}', "update")->name('.update');
     });
 });
+
+
+
+// Example Routes
+// Route::view('/', 'landing');
+// Route::match(['get', 'post'], '/dashboard', function(){
+//     return view('dashboard');
+// });
+// Route::view('/pages/slick', 'pages.slick');
+// Route::view('/pages/datatables', 'pages.datatables');
+// Route::view('/pages/blank', 'pages.blank');

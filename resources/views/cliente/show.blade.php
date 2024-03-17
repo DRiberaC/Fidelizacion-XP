@@ -1,195 +1,150 @@
-@extends('blank')
-
+@extends('layouts.backend')
 @section('content')
-    <div class="px-2 py-2">
-        <div class="max-w-7xl mx-auto">
-            <div class="p-2 mb-1">
-                <div class="mx-auto max-w-screen-xl p-2">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="text-center sm:text-left">
-                            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Cliente
-                            </h1>
-                        </div>
-
-                        <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            @if (Auth::user()->hasRole('Super Admin'))
-                                <form action="{{ route('cliente.sincronizar', [$cliente->id]) }}" method="POST">
-                                    @csrf
-                                    <!-- Botón para enviar el formulario -->
-                                    <button type="submit"
-                                        onclick="return confirm('¿Estás seguro de que deseas sincronizar las cargas?')"
-                                        class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring">
-                                        Sincronizar Cargas
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
+    <div class="content">
+        <!-- User Info -->
+        <div class="block block-rounded">
+            <div class="block-content text-center">
+                <div class="py-4">
+                    <h1 class="fs-lg mb-0">
+                        <span>{{ $cliente->name }}&nbsp;{{ $cliente->last_name }}</span>
+                    </h1>
+                    {{-- <p class="fs-sm fw-medium text-muted">UI Designer</p> --}}
                 </div>
-
             </div>
 
-            <div class="p-8 mb-5">
-                <div>
-                    <div class="px-4 sm:px-0">
-                        <h3 class="text-base font-semibold leading-7 text-gray-900">Información Personal</h3>
-                        <a href="{{ route('cliente.edit', [$cliente]) }}">
-                            <button
-                                class="bg-violet-600 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded text-xs">
-                                Editar
-                            </button>
-                        </a>
+            @php
+                $gnv = $cliente->getGNV();
+                $gas = $cliente->getGAS();
+                $dis = $cliente->getDIS();
+                $ggd = $gnv + $gas + $dis;
+
+                $reclamados = $cliente->puntosReclamados();
+
+                $puntosrestantes = $ggd - $reclamados;
+            @endphp
+
+            <div class="block-content bg-body-light text-center">
+                <div class="row items-push text-uppercase">
+                    <div class="col-6 col-md-4">
+                        <div class="fw-semibold text-dark mb-1">Puntos Obtenidos</div>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ $ggd }}</a>
                     </div>
-                    <div class="mt-6 border-t border-gray-100">
-                        <dl class="divide-y divide-gray-100">
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Nombre Completo</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ $cliente->name }}&nbsp;{{ $cliente->last_name }}
-                                </dd>
-                                <dt class="text-sm font-medium leading-6 text-gray-900">CI/NIT</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ $cliente->ci_nit }}
-                                </dd>
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Telefono</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ $cliente->telefono }}
-                                </dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Fecha de Inicio</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ strftime('%e de %B del %Y', strtotime($cliente->subscription_start)) }}
-                                </dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Usuario</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ $cliente->email }}</dd>
-                            </div>
-
-                            @php
-                                $gnv = $cliente->getGNV();
-                                $gas = $cliente->getGAS();
-                                $dis = $cliente->getDIS();
-                                $ggd = $gnv + $gas + $dis;
-
-                                $reclamados = $cliente->puntosReclamados();
-
-                                $puntosrestantes = $ggd - $reclamados;
-                            @endphp
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Obtenidos</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ $ggd }}
-                                </dd>
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Reclamados</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $reclamados }}
-                                </dd>
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Puntos Restantes</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {{ $puntosrestantes }}</dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Premio</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <div class="flex space-x-4">
-
-                                        <a href="{{ route('cliente.darPremio', [$cliente]) }}">
-                                            <button
-                                                class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
-                                                Dar Premio
-                                            </button>
-                                        </a>
-
-                                        <a href="{{ route('cliente.listapremios', [$cliente]) }}">
-                                            <button
-                                                class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
-                                                type="button" value="Ver">
-                                                <span class="text-sm font-medium"> Ver Premios Recibidos </span>
-                                            </button>
-                                        </a>
-
-                                        <a href="{{ route('cliente.cargasCliente', [$cliente]) }}">
-                                            <button
-                                                class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
-                                                type="button" value="Ver">
-                                                <span class="text-sm font-medium"> Ver Cargas </span>
-                                            </button>
-                                        </a>
-                                    </div>
-                                </dd>
-                            </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-sm font-medium leading-6 text-gray-900">Vehiculos</dt>
-                                <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                                        <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                            <div class="flex w-0 flex-1 items-center">
-
-                                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                    <span class="truncate font-medium">Lista de vehiculos asociados al
-                                                        cliente</span>
-                                                </div>
-                                            </div>
-                                            <div class="ml-4 flex-shrink-0">
-                                                @if (Auth::user()->hasRole('Super Admin'))
-                                                    <a href="{{ route('vehiculo.create', [$cliente]) }}">
-                                                        <button
-                                                            class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
-                                                            Agregar Vehiculo
-                                                        </button>
-                                                    </a>
-                                                @endif
-
-                                            </div>
-                                        </li>
-
-                                        @foreach ($cliente->vehiculos as $vehiculo)
-                                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                <div class="flex w-0 flex-1 items-center">
-                                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                        <span class="truncate font-medium">vehiculo con placa:</span>
-                                                        <span
-                                                            class="flex-shrink-0 text-gray-400">{{ $vehiculo->placa }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="ml-4 flex-shrink-0">
-                                                    {{-- <button
-                                                        class="bg-red-600 hover:bg-red-500 text-white text-xs/[8px] font-bold py-2 px-4 rounded">
-                                                        Eliminar
-                                                    </button> --}}
-                                                    @if (Auth::user()->hasRole('Super Admin'))
-                                                        <form action="{{ route('vehiculo.destroy', [$cliente->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="id"
-                                                                value="{{ $vehiculo->id }}">
-                                                            <!-- Agregar más campos si es necesario -->
-
-                                                            <!-- Botón para enviar el formulario -->
-                                                            <button type="submit"
-                                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
-                                                                class="bg-red-600 hover:bg-red-500 text-white text-xs/[8px] font-bold py-2 px-4 rounded">
-                                                                Eliminar
-                                                            </button>
-                                                        </form>
-                                                    @endif
-
-                                                </div>
-                                            </li>
-                                        @endforeach
-
-                                    </ul>
-                                </dd>
-                            </div>
-                        </dl>
+                    <div class="col-6 col-md-4">
+                        <div class="fw-semibold text-dark mb-1">Puntos Reclamados</div>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ $reclamados }}</a>
                     </div>
+                    <div class="col-6 col-md-4">
+                        <div class="fw-semibold text-dark mb-1">Puntos Restantes</div>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ $puntosrestantes }}</a>
+                    </div>
+                    {{-- <div class="col-6 col-md-3">
+                        <div class="fw-semibold text-dark mb-1">Referred</div>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">3</a>
+                    </div> --}}
                 </div>
-
             </div>
-
         </div>
+        <!-- END User Info -->
+
+        <!-- Preview Color Themes -->
+        {{-- <h2 class="content-heading">Preview Color Theme</h2> --}}
+        <div class="block block-rounded">
+            <div class="block-content block-content-full">
+                <!-- Toggle Themes functionality initialized in Template._uiHandleTheme() -->
+                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                <div class="row text-center">
+                    <div class="col-6 col-xl-2 offset-xl-1 py-4">
+                        <a class="item item-link-pop item-circle bg-amethyst text-white mx-auto mb-3"
+                            href="{{ route('cliente.cargasCliente', [$cliente]) }}">
+                            <i class="fa fa-gas-pump"></i>
+                        </a>
+                        <div class="fw-semibold">Ver cargas realizadas</div>
+                    </div>
+                    <div class="col-6 col-xl-2 py-4">
+                        <a class="item item-link-pop item-circle bg-flat text-white mx-auto mb-3"
+                            href="{{ route('cliente.listapremios', [$cliente]) }}">
+                            <i class="fa fa-gift"></i>
+                        </a>
+                        <div class="fw-semibold">Premios recibidos</div>
+                    </div>
+                    <div class="col-6 col-xl-2 offset-xl-3 py-4">
+                        <a class="item item-link-pop item-circle bg-modern text-white mx-auto mb-3"
+                            href="{{ route('cliente.darPremio', [$cliente]) }}">
+                            <i class="fa fa-boxes-packing"></i>
+                        </a>
+                        <div class="fw-semibold">Dar premio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Preview Color Themes -->
+
+        <!-- Addresses -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Cliente</h3>
+                <div class="block-options">
+                    <a href="{{ route('cliente.edit', [$cliente]) }}">
+                        <button type="button" class="btn btn-primary">Editar cliente</button>
+                    </a>
+                </div>
+            </div>
+            <div class="block-content">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Billing Address -->
+                        <div class="block block-rounded block-bordered">
+                            <div class="block-header border-bottom">
+                                <h3 class="block-title">Datos personales</h3>
+                            </div>
+                            <div class="block-content">
+                                <div class="fs-4 mb-1">{{ $cliente->name }}&nbsp;{{ $cliente->last_name }}</div>
+                                <address class="fs-sm">
+                                    <strong>Teléfono:</strong> {{ $cliente->telefono }}<br>
+                                    <strong>CI/NIT:</strong> {{ $cliente->ci_nit }}<br>
+                                    <strong>Fecha de inicio:</strong> {{ $cliente->subscription_start }}<br><br>
+                                </address>
+                            </div>
+                        </div>
+                        <!-- END Billing Address -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Billing Address -->
+                        <div class="block block-rounded block-bordered">
+                            <div class="block-header border-bottom">
+                                <h3 class="block-title">Vehiculos asociados al cliente</h3>
+                                <div class="block-options">
+                                    <a href="{{ route('vehiculo.create', [$cliente]) }}">
+                                        <button type="button" class="btn btn-info">Agregar vehiculo</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="block-content">
+                                @foreach ($cliente->vehiculos as $vehiculo)
+                                    <p>
+                                    <form action="{{ route('vehiculo.destroy', [$cliente->id]) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $vehiculo->id }}">
+                                        <i class="fa fa-car"></i>
+                                        Vehiculo: <a href="javascript:void(0)">{{ $vehiculo->placa }}</a>
+                                        <button type="submit"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
+                                            class="btn btn-sm btn-danger me-1">
+                                            <i class="fa fa-fw fa-exclamation-circle"></i> Eliminar
+                                        </button>
+                                    </form>
+                                    </p>
+                                @endforeach
+                            </div>
+                        </div>
+                        <!-- END Billing Address -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Addresses -->
+
+
+
     </div>
 @endsection

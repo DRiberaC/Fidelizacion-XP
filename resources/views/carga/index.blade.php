@@ -1,145 +1,107 @@
-@extends('blank')
-
-@section('styles')
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css"> --}}
-@endsection
-
+@extends('layouts.backend')
 @section('content')
-    <div class="px-2 py-2">
-        <div class="max-w-7xl mx-auto">
-            <div class="p-2 mb-1">
-                <div class="mx-auto max-w-screen-xl p-2">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="text-center sm:text-left">
-                            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Lista de Cargas {{ $fecha_act }}
-                            </h1>
-                        </div>
-
-                        {{-- <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <a href="{{ route('carga.getcarga') }}">
-                                <button
-                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                    type="button">
-                                    Obtener Cargas de Fecha
-                                </button>
-                            </a>
-                        </div> --}}
-                    </div>
+    <div class="content">
+        <!-- Dynamic Table with Export Buttons -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Cargas de Fecha {{ $fecha_act }}</h3>
+                <div class="block-options">
+                    <a href="{{ route('carga.index', [$fecha_ant]) }}">
+                        <button type="button" class="btn btn-primary">Ver Cargas de Fecha {{ $fecha_ant }}</button>
+                    </a>
+                    <a href="{{ route('carga.index', [$fecha_sig]) }}">
+                        <button type="button" class="btn btn-primary">Ver Cargas de Fecha {{ $fecha_sig }}</button>
+                    </a>
                 </div>
+            </div>
+            <div class="block-content block-content-full">
+                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
 
-                <hr class="py-2">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 20px;">
+                                Cliente
+                            </th>
+                            <th style="width: 15%;">Placa</th>
+                            <th style="width: 15%;">Fecha Venta</th>
+                            <th style="width: 10%;">Nro Factura</th>
+                            <th style="width: 10%;">Cantidad</th>
+                            <th style="width: 10%;">Precio</th>
+                            <th style="width: 10%;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                <div class="grid grid-cols-3 pb-3">
-                    <div class="flex justify-center">
-                        <a href="{{ route('carga.index', [$fecha_ant]) }}">
-                            <button
-                                class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                type="button">
-                                Ver Cargas de Fecha {{ $fecha_ant }}
-                            </button>
-                        </a>
-                    </div>
-                    <div class="flex justify-center">
-                        Cargas de Fecha {{ $fecha_act }}
-                    </div>
-                    <div class="flex justify-center">
-                        <a href="{{ route('carga.index', [$fecha_sig]) }}">
-                            <button
-                                class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                type="button">
-                                Ver Cargas de Fecha {{ $fecha_sig }}
-                            </button>
-                        </a>
-
-                    </div>
-                </div>
-
-                <div class="relative overflow-x-auto">
-                    <table class="table compact stripe w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-black uppercase bg-gray-100 ">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Cliente
+                        @foreach ($cargas as $carga)
+                            <tr class="bg-white border-b">
+                                <th scope="row" class="">
+                                    @if ($carga->user)
+                                        {{ $carga->user->name }}
+                                    @endif
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Placa
+                                <th scope="row" class="">
+                                    {{ $carga->observacion }}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Fecha Venta
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nro Factura
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Cantidad
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Precio
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Total
-                                </th>
+                                <td class="">
+                                    {{ $carga->fecha_venta }}
+                                </td>
+                                <td class="">
+                                    {{ $carga->nro_factura }}
+                                </td>
+                                <td class="">
+                                    {{ $carga->cantidad }}
+                                </td>
+                                <td class="">
+                                    {{ $carga->precio }}
+                                </td>
+                                <td class="">
+                                    {{ $carga->total }}
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($cargas as $carga)
-                                <tr class="bg-white border-b">
-                                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        @if ($carga->user)
-                                            {{ $carga->user->name }}
-                                        @endif
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        {{ $carga->observacion }}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->fecha_venta }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->nro_factura }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->cantidad }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->precio }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->total }}
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @endforeach
 
-                        </tbody>
-                    </table>
-                    <div class="mt-8">
-                        {{ $cargas->links() }}
-                    </div>
-                </div>
+                    </tbody>
+                </table>
 
             </div>
         </div>
-    </div>
-@endsection
+        <!-- END Dynamic Table with Export Buttons -->
+    @endsection
 
+    @section('js_after')
+        <!-- jQuery -->
+        <script src="/js/lib/jquery.min.js"></script>
 
-{{-- @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <!-- Page JS Plugins -->
+        <script src="/js/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js"></script>
+        <script src="/js/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+        <script src="/js/plugins/datatables-buttons/dataTables.buttons.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-jszip/jszip.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js"></script>
+        <script src="/js/plugins/datatables-buttons/buttons.print.min.js"></script>
+        <script src="/js/plugins/datatables-buttons/buttons.html5.min.js"></script>
 
-    <script>
-        // let dt = new DataTable('#lista');
+        <script>
+            (() => {
+                jQuery(".js-dataTable-full").dataTable({
+                    pageLength: 10,
+                    lengthMenu: [
+                        [5, 10, 15, 20],
+                        [5, 10, 15, 20]
+                    ],
+                    autoWidth: !1
+                })
+            })();
+        </script>
+    @endsection
 
-        $('#lista').dataTable({
-            aLengthMenu: [
-                [25, 50, 100, 200, -1],
-                [25, 50, 100, 200, "All"]
-            ],
-            iDisplayLength: 25
-        });
-    </script>
-@endsection --}}
+    @section('css_before')
+        <link rel="stylesheet" href="/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="/js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css">
+        <link rel="stylesheet" href="/js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css">
+    @endsection

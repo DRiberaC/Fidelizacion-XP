@@ -80,11 +80,13 @@ class ClienteController extends Controller
         $last_name = $request->input('last_name');
         $ci_nit = $request->input('ci_nit');
         $telefono = $request->input('telefono');
+        $subscription_start = $request->input('subscription_start');
 
         $cliente->name = $name;
         $cliente->last_name = $last_name;
         $cliente->ci_nit = $ci_nit;
         $cliente->telefono = $telefono;
+        $cliente->subscription_start = $subscription_start;
         $cliente->save();
 
         return redirect()->route('cliente.show', compact('cliente'));
@@ -117,6 +119,7 @@ class ClienteController extends Controller
 
         $puntosD = $ggd - $reclamados;
         $premios = $request->input('premio');
+        // dd($request);
 
         $puntosN = 0;
 
@@ -270,10 +273,10 @@ class ClienteController extends Controller
         $pdf->Cell(60, 0, 'FIRMA: ' . mb_convert_encoding($cliente->name, 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
         // Guardar el PDF en el servidor
-        $pdf->Output(public_path('ticket.pdf'), 'F');
+        $pdf->Output(public_path('ticket\ticket.pdf'), 'F');
 
         // Mostrar el PDF en el navegador
-        return response()->file(public_path('ticket.pdf'));
+        return response()->file(public_path('ticket\ticket.pdf'));
 
         // $pdf->Output('ticket.pdf', 'f');
         // $pdf->Output('ticket.pdf', 'i');

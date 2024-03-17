@@ -1,85 +1,89 @@
-@extends('blank')
-
+@extends('layouts.backend')
 @section('content')
-    <div class="px-2 py-2">
-        <div class="max-w-7xl mx-auto">
-            <div class="p-2 mb-1">
-                <div class="mx-auto max-w-screen-xl p-2">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="text-center sm:text-left">
-                            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Sistema de Fidelización ROES
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-
+    <div class="content">
+        <!-- Dynamic Table with Export Buttons -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Cargas realizadas</h3>
             </div>
-            <div class="p-8 mb-5">
-                <div class="relative overflow-x-auto">
-                    <table class="table compact stripe w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-black uppercase bg-gray-100 ">
+            <div class="block-content block-content-full">
+                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 100px;">
+                                <i class="far fa-user"></i>
+                                Cliente
+                            </th>
+                            <th style="width: 15%;">Placa</th>
+                            <th style="width: 15%;">Fecha Venta</th>
+                            <th style="width: 15%;">Nro Factura</th>
+                            <th style="width: 15%;">Cantidad</th>
+                            <th style="width: 15%;">Precio</th>
+                            <th style="width: 15%;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach ($cargas as $carga)
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Cliente
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Placa
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Fecha Venta
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nro Factura
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Cantidad
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Precio
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Total
-                                </th>
+                                <td class="fw-semibold text-center">
+                                    @if ($carga->user)
+                                        {{ $carga->user->name }}
+                                    @endif
+                                </td>
+                                <td class="fs-sm">{{ $carga->observacion }}</td>
+                                <td class="fs-sm">{{ $carga->fecha_venta }}</td>
+                                <td class="fs-sm">{{ $carga->nro_factura }}</td>
+                                <td class="fs-sm">{{ $carga->cantidad }}</td>
+                                <td class="fs-sm">{{ $carga->precio }}</td>
+                                <td class="fs-sm">{{ $carga->total }}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($cargas as $carga)
-                                <tr class="bg-white border-b">
-                                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        @if ($carga->user)
-                                            {{ $carga->user->name }}
-                                        @endif
-                                    </th>
-                                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
-                                        {{ $carga->observacion }}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->fecha_venta }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->nro_factura }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->cantidad }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->precio }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $carga->total }}
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @endforeach
 
-                        </tbody>
-                    </table>
-                    <div class="mt-8">
-                        {{ $cargas->links() }}
-                    </div>
-                </div>
+                    </tbody>
+                </table>
+
             </div>
-
         </div>
+        <!-- END Dynamic Table with Export Buttons -->
     </div>
+@endsection
+
+@section('js_after')
+    <!-- jQuery -->
+    <script src="/js/lib/jquery.min.js"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/js/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+    <script src="/js/plugins/datatables-buttons/dataTables.buttons.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-jszip/jszip.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js"></script>
+    <script src="/js/plugins/datatables-buttons/buttons.print.min.js"></script>
+    <script src="/js/plugins/datatables-buttons/buttons.html5.min.js"></script>
+
+    <script>
+        (() => {
+            jQuery(".js-dataTable-full").dataTable({
+                pageLength: 5,
+                lengthMenu: [
+                    [5, 10, 15, 20],
+                    [5, 10, 15, 20]
+                ],
+                autoWidth: !1
+            })
+        })();
+    </script>
+@endsection
+
+@section('css_before')
+    <link rel="stylesheet" href="/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="/js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css">
 @endsection

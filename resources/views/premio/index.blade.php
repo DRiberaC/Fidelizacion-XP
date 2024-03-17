@@ -1,52 +1,30 @@
-@extends('blank')
-
+@extends('layouts.backend')
 @section('content')
-    <div class="px-2 py-2">
-        <div class="max-w-7xl mx-auto">
-            <div class="p-2 mb-1">
-                <div class="mx-auto max-w-screen-xl p-2">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="text-center sm:text-left">
-                            <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                Lista de Premios
-                            </h1>
-                        </div>
-
-                        <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <a href="{{ route('premio.create') }}">
-                                <button
-                                    class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                    type="button">
-                                    Agregar Premio
-                                </button>
-                            </a>
-                        </div>
-                    </div>
+    <div class="content">
+        <!-- Dynamic Table with Export Buttons -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Premios</h3>
+                <div class="block-options">
+                    <a href="{{ route('premio.create') }}">
+                        <button type="button" class="btn btn-primary">Agregar premio</button>
+                    </a>
                 </div>
-
             </div>
-            <div class="relative overflow-x-auto rounded-2xl ">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="text-xs text-black uppercase bg-gray-100 ">
+            <div class="block-content block-content-full">
+                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+
+                    <thead>
                         <tr>
-                            <th scope="col" class="px-6 py-3">
+                            <th class="text-center" style="width: 20px;">
                                 Nombre
                             </th>
-                            <th scope="col" class="px-6 py-3">
-                                Puntos
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Cantidad
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Reclamados
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Saldo
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                &nbsp;
-                            </th>
+                            <th style="width: 15%;">Puntos</th>
+                            <th style="width: 15%;">Cantidad</th>
+                            <th style="width: 15%;">Reclamados</th>
+                            <th style="width: 15%;">Saldo</th>
+                            <th style="width: 15%;">Opción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,39 +36,29 @@
                                 $reclamos = $premio->obtenerReclamos();
                                 $total = $adiciones - $reclamos;
                             @endphp
-
                             <tr class="bg-white border-b">
-                                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
+                                <th scope="row" class="fs-sm">
                                     {{ $premio->name }}
                                 </th>
-                                <td class="px-6 py-4">
+                                <th scope="row" class="fs-sm">
                                     {{ $premio->puntos }}
-                                </td>
-                                <td class="px-6 py-4">
+                                </th>
+                                <td class="fs-sm">
                                     {{ $adiciones }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="fs-sm">
                                     {{ $reclamos }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="fs-sm">
                                     {{ $total }}
                                 </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-4">
+                                <td class="text-center">
+                                    <div class="btn-group">
                                         <a href="{{ route('premio.edit', [$premio]) }}">
-                                            <button
-                                                class="rounded-lg bg-violet-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-700 focus:outline-none focus:ring"
-                                                type="button" value="Ver">
-                                                <span class="text-sm font-medium"> Editar </span>
-                                            </button>
+                                            <button type="button" class="btn btn-secondary">Editar</button>
                                         </a>
-
                                         <a href="{{ route('premio.historial', [$premio]) }}">
-                                            <button
-                                                class="rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                                type="button" value="Ver">
-                                                <span class="text-sm font-medium"> Ver Detalle </span>
-                                            </button>
+                                            <button type="button" class="btn btn-info">Ver Datos</button>
                                         </a>
                                     </div>
                                 </td>
@@ -99,8 +67,45 @@
 
                     </tbody>
                 </table>
-            </div>
 
+            </div>
         </div>
-    </div>
-@endsection
+        <!-- END Dynamic Table with Export Buttons -->
+    @endsection
+
+    @section('js_after')
+        <!-- jQuery -->
+        <script src="/js/lib/jquery.min.js"></script>
+
+        <!-- Page JS Plugins -->
+        <script src="/js/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js"></script>
+        <script src="/js/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+        <script src="/js/plugins/datatables-buttons/dataTables.buttons.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-jszip/jszip.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js"></script>
+        <script src="/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js"></script>
+        <script src="/js/plugins/datatables-buttons/buttons.print.min.js"></script>
+        <script src="/js/plugins/datatables-buttons/buttons.html5.min.js"></script>
+
+        <script>
+            (() => {
+                jQuery(".js-dataTable-full").dataTable({
+                    pageLength: 10,
+                    lengthMenu: [
+                        [5, 10, 15, 20],
+                        [5, 10, 15, 20]
+                    ],
+                    autoWidth: !1
+                })
+            })();
+        </script>
+    @endsection
+
+    @section('css_before')
+        <link rel="stylesheet" href="/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="/js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css">
+        <link rel="stylesheet" href="/js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css">
+    @endsection
