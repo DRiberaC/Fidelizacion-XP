@@ -76,7 +76,9 @@ class PremioController extends Controller
 
     function historial(Premio $premio)
     {
-        return view('premio.historial', compact('premio'));
+        $pag = env('PAGINATE', 10);
+        $historials = PremioHistorial::where('premio_id', $premio->id)->paginate($pag);
+        return view('premio.historial', compact('premio', 'historials'));
     }
 
     function historialcreate(Premio $premio)
