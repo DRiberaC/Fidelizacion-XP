@@ -25,7 +25,8 @@ class ClienteController extends Controller
         $clienteRole = Role::where('name', 'Cliente')->first();
 
         if ($clienteRole) {
-            $clientes = $clienteRole->users()->get();
+            $pag = env('PAGINATE', 10);
+            $clientes = $clienteRole->users()->paginate($pag);
         }
         return view('cliente.index', compact('clientes'));
     }

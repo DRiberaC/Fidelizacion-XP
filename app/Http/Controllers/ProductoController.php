@@ -9,7 +9,8 @@ class ProductoController extends Controller
 {
     function index()
     {
-        $productos = Producto::all();
+        $pag = env('PAGINATE', 10);
+        $productos = Producto::paginate($pag);
         return view('producto.index', compact('productos'));
     }
 

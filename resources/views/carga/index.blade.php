@@ -63,6 +63,7 @@
 
                     </tbody>
                 </table>
+                {{ $cargas->links() }}
 
             </div>
         </div>
@@ -87,16 +88,16 @@
         <script src="/js/plugins/datatables-buttons/buttons.html5.min.js"></script>
 
         <script>
-            (() => {
-                jQuery(".js-dataTable-full").dataTable({
-                    pageLength: 10,
-                    lengthMenu: [
-                        [5, 10, 15, 20],
-                        [5, 10, 15, 20]
-                    ],
-                    autoWidth: !1
-                })
-            })();
+            // (() => {
+            //     jQuery(".js-dataTable-full").dataTable({
+            //         pageLength: 10,
+            //         lengthMenu: [
+            //             [5, 10, 15, 20],
+            //             [5, 10, 15, 20]
+            //         ],
+            //         autoWidth: !1
+            //     })
+            // })();
         </script>
     @endsection
 

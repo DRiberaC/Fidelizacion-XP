@@ -10,7 +10,8 @@ class PremioController extends Controller
 {
     function index()
     {
-        $premios = Premio::all();
+        $pag = env('PAGINATE', 10);
+        $premios = Premio::paginate($pag);
         return view('premio.index', compact('premios'));
     }
 
