@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PremioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\VehiculoController;
 
 /*
@@ -87,6 +88,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store-producto', "store")->name('.store');
         Route::get('/editar-producto/{producto}', "edit")->name('.edit');
         Route::post('/update-producto/{producto}', "update")->name('.update');
+    });
+
+    Route::controller(ReporteController::class)->prefix('/reporte')->name('reporte')->group(function () {
+        Route::get('/cliente', "cliente")->name('.cliente')->middleware('PermisoAdmin');
+        Route::get('/premios', "premios")->name('.premios')->middleware('PermisoAdmin');
     });
 });
 
