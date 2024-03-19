@@ -53,6 +53,16 @@
                 <!-- Toggle Themes functionality initialized in Template._uiHandleTheme() -->
                 <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                 <div class="row text-center">
+                    <div class="col-6 col-xl-2 py-4">
+                        <form action="{{ route('cliente.sincronizar', [$cliente->id]) }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="item item-link-pop item-circle bg-sidebar-dark text-white mx-auto mb-3">
+                                <i class="fa fa-gas-pump"></i>
+                            </button>
+                            <div class="fw-semibold">Sincronizar cargas</div>
+                        </form>
+                    </div>
                     <div class="col-6 col-xl-2 offset-xl-1 py-4">
                         <a class="item item-link-pop item-circle bg-amethyst text-white mx-auto mb-3"
                             href="{{ route('cliente.cargasCliente', [$cliente]) }}">
@@ -67,7 +77,7 @@
                         </a>
                         <div class="fw-semibold">Premios recibidos</div>
                     </div>
-                    <div class="col-6 col-xl-2 offset-xl-3 py-4">
+                    <div class="col-6 col-xl-2 offset-xl-2 py-4">
                         <a class="item item-link-pop item-circle bg-modern text-white mx-auto mb-3"
                             href="{{ route('cliente.darPremio', [$cliente]) }}">
                             <i class="fa fa-boxes-packing"></i>

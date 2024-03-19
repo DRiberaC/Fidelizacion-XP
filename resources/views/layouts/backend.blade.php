@@ -168,7 +168,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-main-heading">Reportes</li>
+                        {{-- <li class="nav-main-heading">Reportes</li>
 
                         <li class="nav-main-item open">
                             <a class="nav-main-link{{ request()->is('reportes*') ? ' active' : '' }}"
@@ -183,7 +183,7 @@
                                 <i class="nav-main-link-icon fa fa-circle"></i>
                                 <span class="nav-main-link-name">Reporte de premios</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         {{-- <li class="nav-main-item{{ request()->is('*/cliente/*') ? ' open' : '' }}">
                             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
