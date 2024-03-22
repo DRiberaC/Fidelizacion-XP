@@ -28,6 +28,11 @@ Route::get('/', function () {
     }
 });
 
+Route::controller(CargaController::class)->prefix('/cargas')->name('cargas')->group(function () {
+    Route::post('/recibirCarga', "recibirCarga")->name('.recibirCarga');
+    Route::get('/lastCarga', "lastCarga")->name('.lastCarga');
+});
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', function () {
