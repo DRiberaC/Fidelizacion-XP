@@ -27,15 +27,15 @@
                 <div class="row items-push text-uppercase">
                     <div class="col-6 col-md-4">
                         <div class="fw-semibold text-dark mb-1">Puntos Obtenidos</div>
-                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ $ggd }}</a>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ number_format($ggd, 2) }}</a>
                     </div>
                     <div class="col-6 col-md-4">
                         <div class="fw-semibold text-dark mb-1">Puntos Reclamados</div>
-                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ $reclamados }}</a>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ number_format($reclamados, 2) }}</a>
                     </div>
                     <div class="col-6 col-md-4">
                         <div class="fw-semibold text-dark mb-1">Puntos Restantes</div>
-                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ $puntosrestantes }}</a>
+                        <a class="link-fx fs-3 text-primary" href="javascript:void(0)">{{ number_format($puntosrestantes, 2) }}</a>
                     </div>
                     {{-- <div class="col-6 col-md-3">
                         <div class="fw-semibold text-dark mb-1">Referred</div>
@@ -46,48 +46,45 @@
         </div>
         <!-- END User Info -->
 
-        <!-- Preview Color Themes -->
-        {{-- <h2 class="content-heading">Preview Color Theme</h2> --}}
-        <div class="block block-rounded">
+        <!-- Client Actions -->
+        <div class="block block-rounded border">
             <div class="block-content block-content-full">
-                <!-- Toggle Themes functionality initialized in Template._uiHandleTheme() -->
-                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                <div class="row text-center">
-                    <div class="col-6 col-xl-2 py-4">
+                <div class="row text-center items-push">
+                    <div class="col-6 col-md-3 py-4">
                         <form action="{{ route('cliente.sincronizar', [$cliente->id]) }}" method="POST">
                             @csrf
                             <button type="submit"
                                 class="item item-link-pop item-circle bg-sidebar-dark text-white mx-auto mb-3">
-                                <i class="fa fa-gas-pump"></i>
+                                <i class="fa fa-sync-alt"></i>
                             </button>
                             <div class="fw-semibold">Sincronizar cargas</div>
                         </form>
                     </div>
-                    <div class="col-6 col-xl-2 offset-xl-1 py-4">
+                    <div class="col-6 col-md-3 py-4 border-start-md">
                         <a class="item item-link-pop item-circle bg-amethyst text-white mx-auto mb-3"
                             href="{{ route('cliente.cargasCliente', [$cliente]) }}">
-                            <i class="fa fa-gas-pump"></i>
+                            <i class="fa fa-file-invoice-dollar"></i>
                         </a>
                         <div class="fw-semibold">Ver cargas realizadas</div>
                     </div>
-                    <div class="col-6 col-xl-2 py-4">
+                    <div class="col-6 col-md-3 py-4 border-start-md">
                         <a class="item item-link-pop item-circle bg-flat text-white mx-auto mb-3"
                             href="{{ route('cliente.listapremios', [$cliente]) }}">
-                            <i class="fa fa-gift"></i>
+                            <i class="fa fa-tags"></i>
                         </a>
                         <div class="fw-semibold">Premios recibidos</div>
                     </div>
-                    <div class="col-6 col-xl-2 offset-xl-2 py-4">
+                    <div class="col-6 col-md-3 py-4 border-start-md">
                         <a class="item item-link-pop item-circle bg-modern text-white mx-auto mb-3"
                             href="{{ route('cliente.darPremio', [$cliente]) }}">
-                            <i class="fa fa-boxes-packing"></i>
+                            <i class="fa fa-award"></i>
                         </a>
                         <div class="fw-semibold">Dar premio</div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- END Preview Color Themes -->
+        <!-- END Client Actions -->
 
         <!-- Addresses -->
         <div class="block block-rounded">

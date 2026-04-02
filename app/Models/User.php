@@ -13,6 +13,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    const Gasolina_18_dec_2025 = 6.96;
+    const Diesel_18_dec_2025 = 9.80;
+    const GNV_18_dec_2025 = 2.73;
+
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
@@ -58,18 +62,21 @@ class User extends Authenticatable
     public function getGNV()
     {
         $gnv = $this->sumCantidadWithPrice("1.66");
+        $gnv += $this->sumCantidadWithPrice(self::GNV_18_dec_2025);
         return $gnv;
     }
 
     public function getGAS()
     {
         $gas = $this->sumCantidadWithPrice("3.74");
+        $gas += $this->sumCantidadWithPrice(self::Gasolina_18_dec_2025);
         return $gas;
     }
 
     public function getDIS()
     {
         $dis = $this->sumCantidadWithPrice("3.72");
+        $dis += $this->sumCantidadWithPrice(self::Diesel_18_dec_2025);
         return $dis;
     }
 

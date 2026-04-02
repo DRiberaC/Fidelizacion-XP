@@ -99,7 +99,7 @@ class ClienteController extends Controller
         $cargas = Carga::where('user_id', $cliente->id)
             ->orderBy('fecha_venta', 'desc')
             ->orderBy('nro_factura', 'desc')
-            ->paginate($pag); // Cambia 10 por el número de resultados por página que desees
+            ->get(); // Se usa get() para que DataTables en la vista maneje todos los registros
         return view('cliente.cargasCliente', compact('cliente', 'cargas'));
     }
 
@@ -241,7 +241,7 @@ class ClienteController extends Controller
         $pdf->SetFont('Helvetica', 'B', 7);
         $pdf->Cell(25, 5, '', 0);
         $pdf->Cell(20, 5, '', 0);
-        $pdf->Cell(15, 5, 'TOTAL: ' . $puntos, 0, 0, 'R');
+        $pdf->Cell(15, 5, 'TOTAL: ' . number_format($puntos, 2), 0, 0, 'R');
         $pdf->Ln(1);
 
         $gnv = $cliente->getGNV();
@@ -253,15 +253,15 @@ class ClienteController extends Controller
 
         $puntosrestantes = $ggd - $reclamados;
 
-        $pdf->Cell(25, 5, 'Puntos Obtenidos: ' . $ggd, 0);
+        $pdf->Cell(25, 5, 'Puntos Obtenidos: ' . number_format($ggd, 2), 0);
         $pdf->Cell(25, 5, '', 0);
         $pdf->Cell(25, 5, '', 0);
         $pdf->Ln(4);
-        $pdf->Cell(20, 5, 'Puntos Reclamados: ' . $reclamados, 0);
+        $pdf->Cell(20, 5, 'Puntos Reclamados: ' . number_format($reclamados, 2), 0);
         $pdf->Cell(25, 5, '', 0);
         $pdf->Cell(25, 5, '', 0);
         $pdf->Ln(4);
-        $pdf->Cell(15, 5, 'Puntos Restantes: ' . $puntosrestantes, 0);
+        $pdf->Cell(15, 5, 'Puntos Restantes: ' . number_format($puntosrestantes, 2), 0);
         $pdf->Cell(25, 5, '', 0);
         $pdf->Cell(25, 5, '', 0);
 
