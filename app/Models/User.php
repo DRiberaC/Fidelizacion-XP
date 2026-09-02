@@ -51,33 +51,44 @@ class User extends Authenticatable
 
     public function puntosReclamados()
     {
-        // $total = $this->premios()
-        //     ->sum('cantidad * puntos');
         $total = $this->premios()
+            ->where('tipo', 'decremento')
             ->select(DB::raw('SUM(cantidad * puntos) as total_puntos'))
             ->value('total_puntos');
-        return $total;
+        return $total ? (float) $total : 0.0;
+    }
+
+    public function getPuntosTotales()
+    {
+        $total = $this->cargas()->sum('puntos');
+        return $total ? (float) $total : 0.0;
     }
 
     public function getGNV()
     {
-        $gnv = $this->sumCantidadWithPrice("1.66");
-        $gnv += $this->sumCantidadWithPrice(self::GNV_18_dec_2025);
-        return $gnv;
+        $precios = Producto::where('name', 'LIKE', '%GNV%')->pluck('precio')->toArray();
+        if (empty($precios)) {
+            $precios = ["1.66", self::GNV_18_dec_2025];
+        }
+        return (float) $this->cargas()->whereIn('precio', $precios)->sum('puntos');
     }
 
     public function getGAS()
     {
-        $gas = $this->sumCantidadWithPrice("3.74");
-        $gas += $this->sumCantidadWithPrice(self::Gasolina_18_dec_2025);
-        return $gas;
+        $precios = Producto::where('name', 'LIKE', '%GAS%')->pluck('precio')->toArray();
+        if (empty($precios)) {
+            $precios = ["3.74", self::Gasolina_18_dec_2025];
+        }
+        return (float) $this->cargas()->whereIn('precio', $precios)->sum('puntos');
     }
 
     public function getDIS()
     {
-        $dis = $this->sumCantidadWithPrice("3.72");
-        $dis += $this->sumCantidadWithPrice(self::Diesel_18_dec_2025);
-        return $dis;
+        $precios = Producto::where('name', 'LIKE', '%DIESEL%')->orWhere('name', 'LIKE', '%DIS%')->pluck('precio')->toArray();
+        if (empty($precios)) {
+            $precios = ["3.72", self::Diesel_18_dec_2025];
+        }
+        return (float) $this->cargas()->whereIn('precio', $precios)->sum('puntos');
     }
 
     public function sumCantidadWithPrice($price)
@@ -85,7 +96,7 @@ class User extends Authenticatable
         $total = $this->cargas()
             ->where('precio', $price)
             ->sum('puntos');
-        return $total;
+        return $total ? (float) $total : 0.0;
     }
 
     /**

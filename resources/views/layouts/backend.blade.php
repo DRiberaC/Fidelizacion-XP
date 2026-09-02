@@ -7,9 +7,8 @@
 
     <title>Sistema de Fidelización ROES</title>
 
-    <meta name="description"
-        content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-    <meta name="author" content="pixelcave">
+    <meta name="description" content="Sistema de Fidelización ROES">
+    <meta name="author" content="Estación de Servicio ROES">
     <meta name="robots" content="noindex, nofollow">
 
     <!-- CSRF Token -->

@@ -107,7 +107,6 @@ class PremioController extends Controller
             'user_id' => $user_id,
         ]);
 
-        return view('premio.historial', compact('premio'));
-        // return redirect()->route('premio.index');
+        return redirect()->route('premio.historial', $premio);
     }
 }

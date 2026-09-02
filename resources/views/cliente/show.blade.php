@@ -13,13 +13,8 @@
             </div>
 
             @php
-                $gnv = $cliente->getGNV();
-                $gas = $cliente->getGAS();
-                $dis = $cliente->getDIS();
-                $ggd = $gnv + $gas + $dis;
-
+                $ggd = $cliente->getPuntosTotales();
                 $reclamados = $cliente->puntosReclamados();
-
                 $puntosrestantes = $ggd - $reclamados;
             @endphp
 

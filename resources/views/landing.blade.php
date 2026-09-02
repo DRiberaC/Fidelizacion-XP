@@ -6,13 +6,13 @@
     <div class="hero-inner">
       <div class="content content-full text-center">
         <h1 class="fw-bold mb-2">
-          OneUI <span class="fw-normal">+ Laravel <span class="text-city">9</span></span>
+          Estación de Servicio <span class="fw-normal">ROES</span>
         </h1>
         <p class="fs-lg fw-medium text-muted mb-4">
-          Welcome to the starter kit! Build something amazing!
+          Sistema de Fidelización de Puntos por Cargas de Combustible
         </p>
-        <a class="btn btn-alt-primary px-3 py-2" href="/dashboard">
-          Enter Dashboard
+        <a class="btn btn-alt-primary px-3 py-2" href="/home">
+          Ingresar al Sistema
           <i class="fa fa-fw fa-arrow-right opacity-50 ms-1"></i>
         </a>
       </div>

@@ -43,26 +43,19 @@ class Carga extends Model
             if ($existingCarga) {
                 return false; // Si ya existe, abortar la creación del modelo
             }
-        });
 
-        static::created(function ($model) {
-            $vehiculo = Vehiculo::where('placa', $model->observacion)->first();
+            $placaClean = trim($model->observacion);
+            $vehiculo = Vehiculo::where('placa', $placaClean)->first();
 
             $producto = Producto::where('precio', $model->precio)->first();
-            if ($producto) {
-                $model->factor = $producto->factor;
-            } else {
-                $model->factor = 1;
-            }
+            $factor = $producto ? (float) $producto->factor : ((float) $model->factor > 0 ? (float) $model->factor : 1.0);
 
-            $model->puntos = $model->cantidad * $model->factor;
+            $model->factor = $factor;
+            $model->puntos = (float) $model->cantidad * $factor;
 
-            if ($vehiculo) {
+            if ($vehiculo && $vehiculo->user_id) {
                 $model->user_id = $vehiculo->user_id;
-                // $model->save();
             }
-
-            $model->save();
         });
     }
 }

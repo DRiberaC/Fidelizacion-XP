@@ -111,16 +111,15 @@ class ClienteController extends Controller
 
     function setPremio(Request $request, User $cliente)
     {
+        $request->validate([
+            'premio' => 'required|array|min:1',
+        ]);
 
-        $gnv = $cliente->getGNV();
-        $gas = $cliente->getGAS();
-        $dis = $cliente->getDIS();
-        $ggd = $gnv + $gas + $dis;
+        $ggd = $cliente->getPuntosTotales();
         $reclamados = $cliente->puntosReclamados();
 
         $puntosD = $ggd - $reclamados;
         $premios = $request->input('premio');
-        // dd($request);
 
         $puntosN = 0;
 
@@ -244,13 +243,8 @@ class ClienteController extends Controller
         $pdf->Cell(15, 5, 'TOTAL: ' . number_format($puntos, 2), 0, 0, 'R');
         $pdf->Ln(1);
 
-        $gnv = $cliente->getGNV();
-        $gas = $cliente->getGAS();
-        $dis = $cliente->getDIS();
-        $ggd = $gnv + $gas + $dis;
-
+        $ggd = $cliente->getPuntosTotales();
         $reclamados = $cliente->puntosReclamados();
-
         $puntosrestantes = $ggd - $reclamados;
 
         $pdf->Cell(25, 5, 'Puntos Obtenidos: ' . number_format($ggd, 2), 0);
@@ -289,20 +283,28 @@ class ClienteController extends Controller
     {
         $vehiculos = $cliente->vehiculos;
         foreach ($vehiculos as $vehiculo) {
+            $placaClean = trim($vehiculo->placa);
 
-            $cargas = Carga::where('observacion', $vehiculo->placa)->where('user_id', null)->get();
+            $cargas = Carga::where(function ($query) use ($placaClean) {
+                $query->where('observacion', $placaClean)
+                    ->orWhere('observacion', 'LIKE', '%' . $placaClean . '%');
+            })
+            ->where(function ($query) use ($cliente) {
+                $query->whereNull('user_id')
+                    ->orWhere('user_id', $cliente->id);
+            })
+            ->get();
+
             foreach ($cargas as $carga) {
-
-                if ($carga->fecha_venta >= $cliente->subscription_start) {
+                if (\Carbon\Carbon::parse($carga->fecha_venta)->startOfDay() >= \Carbon\Carbon::parse($cliente->subscription_start)->startOfDay()) {
 
                     $producto = Producto::where('precio', $carga->precio)->first();
-                    // echo "$carga <br>";
-                    $carga->factor = $producto->factor;
-                    $carga->puntos = $carga->cantidad * $producto->factor;
+                    $factor = $producto ? (float) $producto->factor : ((float) $carga->factor > 0 ? (float) $carga->factor : 1.0);
+
+                    $carga->factor = $factor;
+                    $carga->puntos = (float) $carga->cantidad * $factor;
                     $carga->user_id = $cliente->id;
                     $carga->save();
-                    // echo "$carga";
-                    // return 0;
                 }
             }
         }

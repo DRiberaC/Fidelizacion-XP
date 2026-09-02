@@ -15,7 +15,7 @@
         <form action="{{ route('cliente.setPremio', [$cliente->id]) }}" method="POST"enctype="multipart/form-data">
             <div class="block block-rounded">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Formulario de registro de clientess</h3>
+                    <h3 class="block-title">Formulario de entrega de premios - ROES</h3>
                 </div>
                 <div class="block-content block-content-full">
 
@@ -141,7 +141,7 @@
                         '</td>' +
                         '<td class="px-6 py-4">' +
                         '<div class="btn-group">' +
-                        '<button type="button" class="btnEliminar btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" title="" data-bs-original-title="Remove Client">' +
+                        '<button type="button" class="btnEliminar btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" title="" data-bs-original-title="Eliminar premio">' +
                         '<i class="fa fa-fw fa-times"></i>' +
                         '</button>' +
                         '</div>' +
